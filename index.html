@@ -21,47 +21,38 @@
     }
 
     .top-nav {
-      background: linear-gradient(135deg, #0788bd 0%, #055d85 100%);
+      background: #0788bd;
       color: #ffffff;
-      padding: 16px 24px;
+      padding: 14px 20px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       flex-shrink: 0;
       z-index: 10;
-      box-shadow: 0 2px 12px rgba(7, 136, 189, 0.3);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     }
     .top-nav .menu-icon {
-      font-size: 26px;
+      font-size: 28px;
       cursor: pointer;
       background: none;
       border: none;
       color: #fff;
       padding: 4px 8px;
-      border-radius: 8px;
+      border-radius: 6px;
       transition: background 0.2s;
     }
     .top-nav .menu-icon:hover {
       background: rgba(255,255,255,0.15);
     }
-    .top-nav .nav-title {
-      font-size: 18px;
-      font-weight: 600;
-      letter-spacing: 0.5px;
-    }
-    .top-nav .nav-title span {
-      font-weight: 300;
-      opacity: 0.8;
-    }
     .top-nav .right-icons {
       display: flex;
-      gap: 18px;
-      font-size: 22px;
+      gap: 20px;
+      font-size: 24px;
     }
     .top-nav .right-icons span {
       cursor: pointer;
       padding: 4px 6px;
-      border-radius: 8px;
+      border-radius: 6px;
       transition: background 0.2s;
     }
     .top-nav .right-icons span:hover {
@@ -77,7 +68,7 @@
     .main-content {
       flex: 1;
       overflow-y: auto;
-      padding: 24px 8% 16px;
+      padding: 20px 8% 10px;
       display: flex;
       flex-direction: column;
       background: #f0f4f8;
@@ -85,9 +76,9 @@
 
     .card {
       background: #ffffff;
-      border-radius: 20px;
+      border-radius: 16px;
       padding: 28px 24px 32px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.06);
       max-width: 440px;
       margin: 0 auto;
       width: 100%;
@@ -98,9 +89,9 @@
       margin-bottom: 22px;
     }
     .brand .logo {
-      font-size: 44px;
+      font-size: 48px;
       font-weight: 700;
-      letter-spacing: -2px;
+      letter-spacing: -3px;
       color: #1a1a1a;
     }
     .brand .logo .m {
@@ -111,10 +102,10 @@
       color: #0a9dd1;
     }
     .brand .sub {
-      font-size: 11px;
-      letter-spacing: 4px;
-      color: #888;
-      margin-top: 2px;
+      font-size: 12px;
+      letter-spacing: 5px;
+      color: #666;
+      margin-top: 3px;
       font-weight: 500;
     }
 
@@ -122,21 +113,20 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 22px;
-      font-size: 14px;
-      color: #555;
-      margin-bottom: 24px;
+      gap: 25px;
+      font-size: 15px;
+      color: #333;
+      margin-bottom: 25px;
       font-weight: 500;
     }
     .lang-toggle .switch {
-      width: 52px;
-      height: 26px;
-      background: #d1d5db;
+      width: 56px;
+      height: 28px;
+      background: #ccc;
       border-radius: 30px;
       position: relative;
       cursor: pointer;
       transition: 0.3s;
-      box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
     }
     .lang-toggle .switch.active {
       background: #079acb;
@@ -144,17 +134,16 @@
     .lang-toggle .switch:after {
       content: "";
       position: absolute;
-      width: 20px;
-      height: 20px;
+      width: 22px;
+      height: 22px;
       background: #ffffff;
       border-radius: 50%;
       left: 3px;
       top: 3px;
       transition: 0.3s;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.15);
     }
     .lang-toggle .switch.active:after {
-      left: 29px;
+      left: 31px;
     }
 
     .login-form {
@@ -162,37 +151,33 @@
       margin: 0 auto;
     }
     .form-group {
-      margin-bottom: 22px;
-      border-bottom: 2px solid #e8edf2;
+      margin-bottom: 24px;
+      border-bottom: 2px solid #78bdcf;
       position: relative;
-      transition: border-color 0.3s;
-    }
-    .form-group:focus-within {
-      border-bottom-color: #0788bd;
     }
     .form-group input {
       width: 100%;
       border: none;
       outline: none;
-      font-size: 18px;
+      font-size: 20px;
       padding: 10px 0 8px;
       color: #1a1a1a;
       background: transparent;
       font-weight: 400;
     }
     .form-group input::placeholder {
-      color: #b0b8c0;
+      color: #aaa;
       font-weight: 300;
     }
     .form-group .forgot-link {
       position: absolute;
       right: 0;
       bottom: 8px;
-      font-size: 15px;
-      color: #0788bd;
+      font-size: 17px;
+      color: #269ab9;
       cursor: pointer;
       text-decoration: none;
-      font-weight: 500;
+      font-weight: 400;
     }
     .form-group .forgot-link:hover {
       text-decoration: underline;
@@ -201,22 +186,21 @@
     .btn-login {
       display: block;
       width: 100%;
-      margin: 12px auto 0;
-      background: linear-gradient(135deg, #08a2d5 0%, #0788bd 100%);
+      max-width: 280px;
+      margin: 8px auto 0;
+      background: #08a2d5;
       color: #ffffff;
       border: none;
       border-radius: 30px;
-      padding: 14px 0;
-      font-size: 18px;
+      padding: 13px 0;
+      font-size: 19px;
       font-weight: 600;
       cursor: pointer;
-      transition: all 0.3s;
+      transition: background 0.2s;
       letter-spacing: 0.5px;
-      box-shadow: 0 4px 14px rgba(7, 136, 189, 0.35);
     }
     .btn-login:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(7, 136, 189, 0.45);
+      background: #0690be;
     }
     .btn-login:active {
       transform: scale(0.98);
@@ -242,23 +226,23 @@
       display: flex;
       align-items: flex-end;
       justify-content: center;
-      padding: 16px 0 6px;
-      min-height: 80px;
+      padding: 12px 0 5px;
+      min-height: 70px;
     }
     .banner-container img {
       width: 100%;
       max-width: 500px;
       height: auto;
       display: block;
-      border-radius: 14px;
-      box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+      border-radius: 12px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
     }
 
     .footer-links {
       display: flex;
       justify-content: center;
       gap: 18px;
-      padding: 10px 20px 12px;
+      padding: 8px 20px 10px;
       flex-shrink: 0;
       border-top: 1px solid #e8edf2;
       background: #ffffff;
@@ -282,36 +266,33 @@
     }
 
     @media (max-width: 600px) {
-      .main-content { padding: 16px 5% 12px; }
-      .card { padding: 20px 16px 24px; border-radius: 16px; }
-      .brand .logo { font-size: 38px; }
+      .main-content { padding: 16px 5% 10px; }
+      .card { padding: 20px 16px 24px; border-radius: 14px; }
+      .brand .logo { font-size: 40px; }
       .brand .sub { font-size: 10px; letter-spacing: 3px; }
       .lang-toggle { font-size: 13px; gap: 18px; margin-bottom: 20px; }
-      .form-group input { font-size: 16px; }
-      .form-group .forgot-link { font-size: 14px; }
-      .btn-login { font-size: 16px; padding: 12px 0; }
-      .banner-container { padding: 12px 0 4px; min-height: 50px; }
-      .banner-container img { border-radius: 10px; }
-      .footer-links { gap: 8px; padding: 8px 12px 10px; }
+      .form-group input { font-size: 18px; }
+      .form-group .forgot-link { font-size: 15px; }
+      .btn-login { font-size: 17px; padding: 12px 0; max-width: 100%; }
+      .banner-container { padding: 10px 0 3px; min-height: 50px; }
+      .banner-container img { border-radius: 8px; }
+      .footer-links { gap: 10px; padding: 6px 12px 8px; }
       .footer-links a { font-size: 11px; padding: 3px 6px; }
       .footer-links .sep { display: none; }
     }
 
     @media (max-width: 400px) {
-      .brand .logo { font-size: 32px; }
-      .form-group input { font-size: 15px; }
-      .btn-login { font-size: 15px; padding: 11px 0; }
+      .brand .logo { font-size: 34px; }
+      .form-group input { font-size: 16px; }
+      .btn-login { font-size: 16px; padding: 11px 0; }
       .top-nav { padding: 12px 16px; }
-      .top-nav .nav-title { font-size: 16px; }
-      .top-nav .right-icons { font-size: 19px; gap: 14px; }
+      .top-nav .right-icons { font-size: 20px; gap: 14px; }
     }
   </style>
 </head>
 <body>
-  <!-- ===== TOP NAVIGATION ===== -->
   <div class="top-nav">
     <button class="menu-icon" onclick="goHome()">☰</button>
-    <div class="nav-title">mBOB <span>Mobile</span></div>
     <div class="right-icons">
       <a href="mailto:support@bob.bt" title="Email Support">
         <span>✉</span>
@@ -320,10 +301,8 @@
     </div>
   </div>
 
-  <!-- ===== MAIN CONTENT ===== -->
   <div class="main-content">
     <div class="card">
-      <!-- Brand -->
       <div class="brand">
         <div class="logo">
           <span class="m">m</span>BO<span class="b">B</span>
@@ -331,14 +310,12 @@
         <div class="sub">MOBILE BANKING</div>
       </div>
 
-      <!-- Language Toggle -->
       <div class="lang-toggle">
         <span>English</span>
         <div class="switch" id="langSwitch" onclick="toggleLanguage()"></div>
         <span>བོད་ཡིག</span>
       </div>
 
-      <!-- Login Form -->
       <div class="login-form">
         <div class="form-group">
           <input type="text" id="loginUserId" placeholder="Enter User ID" autocomplete="off">
@@ -354,13 +331,11 @@
       </div>
     </div>
 
-    <!-- Banner Image -->
     <div class="banner-container">
       <img src="https://i.postimg.cc/3wTkpstp/IMG-20260908-095801-957.jpg" alt="mBOB Banner" loading="lazy">
     </div>
   </div>
 
-  <!-- ===== FOOTER LINKS ===== -->
   <div class="footer-links">
     <a href="#" onclick="goHome()">🏠 Home</a>
     <span class="sep">|</span>
@@ -370,43 +345,30 @@
   </div>
 
   <script>
-    // ===== STORAGE KEY =====
     const LOGIN_KEY = 'mBobLogins';
 
-    // ===== HOME =====
     function goHome() {
       document.getElementById('loginUserId').value = '';
       document.getElementById('loginPin').value = '';
       document.getElementById('loginSuccess').classList.remove('show');
     }
 
-    // ===== PRIVACY POLICY =====
     function showPrivacy() {
-      alert(
-        '🔒 Privacy Policy\n\n' +
-        'Your privacy is important to us.\n\n' +
-        '• Your login credentials are stored securely\n' +
-        '• We do not share your data with third parties\n' +
-        '• All transactions are encrypted\n' +
-        '• You can clear your data anytime\n\n' +
-        'For more details, contact: support@bob.bt'
-      );
+      alert('🔒 Privacy Policy\n\nYour privacy is important to us.\n\n• Your login credentials are stored securely\n• We do not share your data with third parties\n• All transactions are encrypted\n\nFor more details, contact: support@bob.bt');
     }
 
-    // ===== LANGUAGE TOGGLE =====
     function toggleLanguage() {
       document.getElementById('langSwitch').classList.toggle('active');
     }
 
-    // ===== FORGOT HANDLERS =====
     function forgotUserId() {
       alert('📞 Please contact support at support@bob.bt for User ID assistance.');
     }
+
     function forgotPin() {
       alert('📞 Please contact support at support@bob.bt for M-PIN reset.');
     }
 
-    // ===== LOGIN HANDLER =====
     function handleLogin() {
       const userId = document.getElementById('loginUserId').value.trim();
       const pin = document.getElementById('loginPin').value.trim();
@@ -454,7 +416,6 @@
       setTimeout(() => successEl.classList.remove('show'), 3000);
     }
 
-    // ===== INIT =====
     document.addEventListener('DOMContentLoaded', function() {
       document.getElementById('langSwitch').classList.remove('active');
     });
