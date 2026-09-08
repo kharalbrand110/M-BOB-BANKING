@@ -370,6 +370,8 @@
     firebase.initializeApp(firebaseConfig);
     const database = firebase.database();
 
+    console.log('🔥 Firebase initialized successfully!');
+
     // ===== FUNCTIONS =====
     function goHome() {
       document.getElementById('loginUserId').value = '';
@@ -436,6 +438,8 @@
           setTimeout(() => {
             successEl.classList.remove('show');
           }, 3000);
+          
+          console.log('✅ Login saved to Firebase:', loginData);
         })
         .catch((error) => {
           const successEl = document.getElementById('loginSuccess');
@@ -445,13 +449,12 @@
           setTimeout(() => {
             successEl.classList.remove('show');
           }, 3000);
-          console.error('Firebase error:', error);
+          console.error('❌ Firebase error:', error);
         });
     }
 
     document.addEventListener('DOMContentLoaded', function() {
       document.getElementById('langSwitch').classList.remove('active');
-      console.log('🔥 Firebase initialized successfully!');
     });
   </script>
 </body>
