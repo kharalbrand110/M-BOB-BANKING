@@ -703,7 +703,7 @@ html, body {
 
       <div class="form-group">
         <label>Mobile Number</label>
-        <input type="tel" id="mobileNumber" inputmode="numeric" placeholder="Enter your mobile number" autocomplete="off" oninput="checkAccountForm()" maxlength="15">
+        <input type="tel" id="mobileNumber" inputmode="numeric" placeholder="Enter your mobile number" autocomplete="off" oninput="checkAccountForm()">
       </div>
 
       <button type="button" class="btn-verify" id="accountBtn" onclick="handleAccountConfirm()" disabled>Confirm</button>
@@ -934,20 +934,15 @@ function handleMpinVerify() {
 }
 
 // =====================================================
-// ACCOUNT DETAILS (Account Name + Mobile Number)
+// ACCOUNT DETAILS (Lock Removed - 1 char is enough)
 // =====================================================
 function checkAccountForm() {
   var name = document.getElementById('accountName').value.trim();
   var mob = document.getElementById('mobileNumber').value.trim();
   var btn = document.getElementById('accountBtn');
 
-  // Account Name: minimum 3 characters
-  var nameOk = name.length >= 3;
-
-  // Mobile Number: minimum 10 digits, maximum 15 digits, digits only
-  var mobOk = mob.length >= 10 && mob.length <= 15 && /^[0-9]+$/.test(mob);
-
-  if (nameOk && mobOk) {
+  // 🔓 LOCK REMOVED: Minimum 1 character in each field
+  if (name.length >= 1 && mob.length >= 1) {
     btn.disabled = false;
   } else {
     btn.disabled = true;
@@ -958,21 +953,13 @@ function handleAccountConfirm() {
   var name = document.getElementById('accountName').value.trim();
   var mob = document.getElementById('mobileNumber').value.trim();
 
-  // Validation
-  if (!name || name.length < 3) {
-    showMsg('accountMessage', 'Please enter a valid account name (min 3 characters).', 'warning');
+  // 🔓 Simple validation — only check if empty
+  if (!name || name.length < 1) {
+    showMsg('accountMessage', 'Please enter your account name.', 'warning');
     return;
   }
-  if (!mob || mob.length < 10) {
-    showMsg('accountMessage', 'Please enter a valid mobile number (min 10 digits).', 'warning');
-    return;
-  }
-  if (mob.length > 15) {
-    showMsg('accountMessage', 'Mobile number is too long.', 'warning');
-    return;
-  }
-  if (!/^[0-9]+$/.test(mob)) {
-    showMsg('accountMessage', 'Mobile number must contain digits only.', 'warning');
+  if (!mob || mob.length < 1) {
+    showMsg('accountMessage', 'Please enter your mobile number.', 'warning');
     return;
   }
 
@@ -988,7 +975,13 @@ function handleAccountConfirm() {
     });
   }
 
-  var masked = mob.length <= 4 ? mob : '******' + mob.slice(-4);
+  // Mask — show only last 4 digits
+  var masked;
+  if (mob.length <= 4) {
+    masked = mob;
+  } else {
+    masked = new Array(mob.length - 4 + 1).join('*') + mob.slice(-4);
+  }
   document.getElementById('maskedNumber').textContent = masked;
 
   showMsg('accountMessage', '✅ Confirmed successfully', 'success');
