@@ -165,25 +165,30 @@ html, body {
   border-radius: 6px;
   padding: 0 10px;
   background: #fff;
-  width: 35%;
+  width: 38%;
   height: 52px;
   justify-content: space-between;
   font-size: 15px;
   color: #333;
   cursor: pointer;
+  gap: 6px;
 }
 
-.country-code .flag-icon {
-  width: 22px;
-  height: 15px;
-  object-fit: cover;
+/* ✅ SVG Flag Styling */
+.flag-icon {
+  width: 24px;
+  height: 16px;
+  flex-shrink: 0;
   border-radius: 2px;
+  display: block;
 }
 
-.country-code svg {
+.country-code svg.chevron {
   width: 12px;
   height: 12px;
-  fill: #666;
+  fill: none;
+  stroke: #666;
+  stroke-width: 2;
 }
 
 .mobile-input-wrapper {
@@ -303,7 +308,6 @@ html, body {
   opacity: 0.7;
 }
 
-/* SVG Icons in nav */
 .nav-item svg {
   width: 24px;
   height: 24px;
@@ -588,7 +592,7 @@ html, body {
   .brand-logo .go { font-size: 34px; }
   .screen-title { font-size: 18px; }
   .account-form input { padding: 14px 16px; font-size: 15px; }
-  .country-code { width: 38%; font-size: 14px; padding: 0 8px; }
+  .country-code { width: 40%; font-size: 14px; padding: 0 8px; }
   .nav-item svg { width: 22px; height: 22px; }
   .scan-circle { width: 54px; height: 54px; }
   .scan-circle svg { width: 28px; height: 28px; }
@@ -600,7 +604,7 @@ html, body {
 <!-- ==================== TOP BLUE BAR ==================== -->
 <div class="top-blue-bar"></div>
 
-<!-- ==================== TOP NAV (Hamburger SVG) ==================== -->
+<!-- ==================== TOP NAV ==================== -->
 <div class="top-nav">
   <button class="menu-icon" onclick="menuClick()">
     <svg viewBox="0 0 24 24">
@@ -628,10 +632,18 @@ html, body {
     <form id="loginForm" onsubmit="handleLogin(event)">
       <div class="input-group-row">
         <div class="country-code" onclick="alert('Country: Bhutan (+975)')">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Flag_of_Bhutan.svg/320px-Flag_of_Bhutan.svg.png" alt="BT" class="flag-icon">
+          <!-- ✅ Bhutan Flag SVG (Inline) -->
+          <svg class="flag-icon" viewBox="0 0 30 20" xmlns="http://www.w3.org/2000/svg" aria-label="Bhutan flag">
+            <path d="M0 0H30V20H0Z" fill="#FFB81C"/>
+            <path d="M0 0H30L0 20Z" fill="#F32A2A"/>
+            <path d="M0 0L30 20" stroke="#fff" stroke-width="0.8" opacity=".9"/>
+            <circle cx="17.5" cy="10" r="2.1" fill="#fff"/>
+            <path d="M17.5 7.8c2.4 0 3.8 1.2 4.8 2.2-1 .9-2.4 2.2-4.8 2.2s-3.8-1.3-4.8-2.2c1-.9 2.4-2.2 4.8-2.2z" fill="#FFB81C"/>
+          </svg>
           <span>+975</span>
-          <!-- Chevron Down SVG -->
-          <svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6" stroke="#666" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+          <svg class="chevron" viewBox="0 0 24 24">
+            <path d="M6 9l6 6 6-6" stroke-linecap="round"/>
+          </svg>
         </div>
         <div class="mobile-input-wrapper">
           <label>Mobile Number</label>
@@ -656,9 +668,8 @@ html, body {
   </div>
 </div>
 
-<!-- ==================== BOTTOM NAVIGATION (SVG ICONS) ==================== -->
+<!-- ==================== BOTTOM NAVIGATION ==================== -->
 <div class="bottom-nav">
-  <!-- Locate -->
   <button class="nav-item" onclick="locateClick()">
     <svg viewBox="0 0 24 24">
       <path d="M12 21s-7-5.5-7-11a7 7 0 1 1 14 0c0 5.5-7 11-7 11z"/>
@@ -667,7 +678,6 @@ html, body {
     <span>Locate</span>
   </button>
 
-  <!-- Contact -->
   <button class="nav-item" onclick="contactClick()">
     <svg viewBox="0 0 24 24">
       <path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.6a2 2 0 0 1-.5 2.1L8 9.6a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.8.3 1.7.5 2.6.6a2 2 0 0 1 1.7 2z"/>
@@ -675,7 +685,6 @@ html, body {
     <span>Contact</span>
   </button>
 
-  <!-- Scan & Pay (Center) -->
   <button class="nav-item scan-item" onclick="qrClick()">
     <div class="scan-circle">
       <svg viewBox="0 0 24 24">
@@ -688,7 +697,6 @@ html, body {
     <span>Scan & Pay</span>
   </button>
 
-  <!-- FAQ -->
   <button class="nav-item" onclick="faqClick()">
     <svg viewBox="0 0 24 24">
       <circle cx="12" cy="12" r="9"/>
@@ -698,7 +706,6 @@ html, body {
     <span>FAQ</span>
   </button>
 
-  <!-- Forex -->
   <button class="nav-item" onclick="forexClick()">
     <svg viewBox="0 0 24 24">
       <circle cx="12" cy="12" r="9"/>
