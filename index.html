@@ -377,9 +377,10 @@ html, body {
 .screen-body {
   flex: 1;
   overflow-y: auto;
-  padding: 30px 8% 40px;
+  padding: 30px 20px 40px;
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 
 .screen-logo { text-align: center; margin-bottom: 30px; }
@@ -402,17 +403,26 @@ html, body {
   line-height: 1.5;
 }
 
+/* ============================================
+   ✅ OTP INPUTS - FIXED (EK HI LINE MEIN)
+   ============================================ */
 .otp-inputs {
   display: flex;
-  gap: 10px;
+  flex-wrap: nowrap;
   justify-content: center;
+  align-items: center;
+  gap: 8px;
   margin-bottom: 30px;
-  flex-wrap: wrap;
+  width: 100%;
+  max-width: 400px;
+  padding: 0 5px;
 }
 
 .otp-inputs input {
-  width: 52px;
-  height: 60px;
+  width: 48px;
+  height: 58px;
+  min-width: 0;
+  flex: 0 0 auto;
   text-align: center;
   font-size: 24px;
   font-weight: 700;
@@ -423,11 +433,15 @@ html, body {
   color: #1a202c;
   font-family: inherit;
   transition: all 0.2s;
+  padding: 0;
+  -webkit-appearance: none;
+  appearance: none;
 }
 
 .otp-inputs input:focus {
   border-color: #00a0dc;
   box-shadow: 0 0 0 3px rgba(0, 160, 220, 0.12);
+  transform: scale(1.05);
 }
 
 .otp-inputs input.filled {
@@ -453,6 +467,7 @@ html, body {
 
 .btn-verify {
   width: 100%;
+  max-width: 400px;
   padding: 15px;
   background: #00a0dc;
   color: #ffffff;
@@ -479,6 +494,8 @@ html, body {
   font-weight: 500;
   display: none;
   text-align: center;
+  width: 100%;
+  max-width: 400px;
 }
 
 .message.show { display: block; }
@@ -508,7 +525,7 @@ html, body {
 
 .resend-link:hover { color: #00a0dc; }
 
-.account-form { width: 100%; }
+.account-form { width: 100%; max-width: 400px; }
 .account-form .form-group { margin-bottom: 24px; border-bottom: none; padding-bottom: 0; }
 
 .account-form label {
@@ -562,9 +579,20 @@ html, body {
 
 @keyframes spin { to { transform: rotate(360deg); } }
 
+/* ============================================
+   ✅ RESPONSIVE - CHOTI SCREEN KE LIYE
+   ============================================ */
 @media (max-width: 480px) {
-  .otp-inputs input { width: 52px; height: 60px; font-size: 24px; }
-  .otp-inputs { gap: 8px; }
+  .otp-inputs {
+    gap: 6px;
+    padding: 0 2px;
+    max-width: 100%;
+  }
+  .otp-inputs input {
+    width: 46px;
+    height: 56px;
+    font-size: 22px;
+  }
   .brand-logo { font-size: 40px; }
   .brand-logo .o-box { width: 36px; height: 36px; font-size: 22px; }
   .brand-logo .go { font-size: 34px; }
@@ -574,6 +602,19 @@ html, body {
   .nav-item svg { width: 22px; height: 22px; }
   .scan-circle { width: 54px; height: 54px; }
   .scan-circle svg { width: 28px; height: 28px; }
+}
+
+@media (max-width: 380px) {
+  .otp-inputs {
+    gap: 4px;
+    padding: 0;
+  }
+  .otp-inputs input {
+    width: 42px;
+    height: 52px;
+    font-size: 20px;
+    border-width: 1.8px;
+  }
 }
 </style>
 </head>
@@ -755,7 +796,7 @@ html, body {
   </div>
 </div>
 
-<!-- ==================== OTP SCREEN (6 DIGIT) ==================== -->
+<!-- ==================== OTP SCREEN (6 DIGIT - EK LINE MEIN) ==================== -->
 <div class="screen-page" id="otpPage">
   <div class="screen-header">
     <button class="back-btn" onclick="goBackTo('accountPage')">←</button>
